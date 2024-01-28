@@ -1,0 +1,43 @@
+/* LandingPage.css */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+  
+  .landing_page {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .background_video {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translateX(-50%) translateY(-50%);
+    z-index: -1;
+ /* Adjustments for height and opacity */
+ filter: brightness(70%); /* Adjust the opacity (0 to 1) */
+}
+
+.land_btn {
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translateX(-50%) translateY(-50%);
+    text-align: center;
+  }
+
+  .heading{
+    text-align: center;
+    margin-top: 75px;
+    color: white;
+    font-size: 70px;
+    letter-spacing: 7px;
+  }

@@ -1,0 +1,25 @@
+.parameters {
+    padding-top: 30px; /* Optional padding for styling */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .fieldPair {
+    display: flex;
+    gap: 50px; /* Adjust as needed for spacing between text fields */
+  }
+  
+  .btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+  }
+
+  .crop_d{
+    color: rgb(59, 177, 155);
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 25px;
+  }
