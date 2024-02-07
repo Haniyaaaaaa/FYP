@@ -66,14 +66,14 @@ export default function Index() {
         >Get Recommendation</Button>
       </div>
 
-      {showRec && <div style={{  display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
-        <p className={styles.rec} style={{color:"white"}}><span style={{color:"aqua"}}>{crop}</span></p>
-        
-        
-      
+      {showRec && <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+        <p className={styles.rec} style={{ color: "white" }}><span style={{ color: "aqua" }}>{crop}</span></p>
+
+
+
       </div>}
-<div style={{position:"absolute",bottom:"0",width:"100%"}}><Footer /></div>
-      
+      <div style={{ position: "absolute", bottom: "0", width: "100%" }}><Footer /></div>
+
     </div>
   )
 }

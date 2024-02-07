@@ -1,13 +1,13 @@
 // HomeAdmin.js
 import React from 'react';
-import NavbarAdmin from '../NavbarAdmin';
+import NavbarAdmin from '../AdminPanel/NavbarAdmin';
 import styles from './styles.module.css';
 import homepage from '../../images/homepage.jpg';
 import styled from 'styled-components';
 import Footer from '../Footer';
 
 const StyledComponent = styled.div`
-  overflow: hidden;
+  overflow: hidden;z
 `;
 
 const HomeAdmin = () => {
@@ -26,9 +26,9 @@ const HomeAdmin = () => {
           <h1 className={styles.welcome_text}>WELCOME TO FLOODSAFE HUB</h1>
           <p className={styles.tagline}>Empowering Communities, Ensuring Resilience: Your Gateway to FloodSafe Futures</p>
         </div>
-      
+
       </div>
-      <div style={{position:"absolute",bottom:"0",width:"100%"}}><Footer /></div>
+      <div style={{ position: "absolute", bottom: "0", width: "100%" }}><Footer /></div>
 
     </StyledComponent>
   );

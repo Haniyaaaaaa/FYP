@@ -30,6 +30,9 @@ import Documentaries from "./components/Documentries";
 import ElearningCourses from "./components/ElearningCourses";
 import ResearchPaper from "./components/ResearchPaper";
 import Resources from "./components/Resources";
+import Play from "./components/Quiz/play";
+import QuizSummary from "./components/Quiz/QuizSummary";
+import UserDetails from "./components/AdminPanel/UserDetails";
 
 
 function App() {
@@ -133,12 +136,14 @@ function App() {
         {userToken && <Route path="/instream-obstruction" element={<InstreamObstruct />} />}
         {userToken && <Route path="/location-based-prediction" element={<LocationBasedPrediction />} />}
         {userToken && <Route path="/parameter-based-prediction" element={<ParameterBasedPrediction />} />}
+        {userToken && <Route path="/user-details" element={<UserDetails />} />}
 
         {userToken && <Route path="/documentaries" element={<Documentaries />} />}
         {userToken && <Route path="/e-Learning-Courses" element={<ElearningCourses />} />}
         {userToken && <Route path="/research-papers" element={<ResearchPaper />} />}
         {userToken && <Route path="/resources" element={<Resources />} />}
-        {/* {userToken && <Route path="/quiz" element={<ElearningCourses />} />} */}
+        {userToken && <Route path="/play-quiz" element={<Play />} />}
+        {userToken && <Route path="/quiz-summary" element={<QuizSummary />} />}
 
         <Route path="/signup" exact element={<Signup />} />
         <Route path="/login" exact element={<Login />} />

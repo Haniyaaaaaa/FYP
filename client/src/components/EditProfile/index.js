@@ -4,6 +4,7 @@ import styles from "./styles.module.css";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import NavbarFarmer from '../NavbarFarmer';
+import NavbarAdmin from '../AdminPanel/NavbarAdmin';
 import NavbarNormalvictim from '../NavbarNormalvictim'
 import Footer from '../Footer';
 
@@ -155,7 +156,7 @@ const EditProfile = () => {
     return (
         <React.Fragment>
 
-            {userRole === 'farmer' ? <NavbarFarmer /> : <NavbarNormalvictim />}
+            {userRole === 'farmer' ? <NavbarFarmer /> : (userRole === 'power admin' ? <NavbarAdmin /> : <NavbarNormalvictim />)}
 
             <div style={{ width: "100%;", minHeight: "100vh", backgroundColor: "#f5f5f5", display: "flex", alignItems: "center", flexDirection: "column" }}>
 

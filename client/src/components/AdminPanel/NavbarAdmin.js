@@ -12,37 +12,22 @@ import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import Collapse from '@mui/material/Collapse';
+// import Collapse from '@mui/material/Collapse';
 import { Link } from "react-router-dom";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import logo from "../images/logo.png";
-import AgricultureIcon from '@mui/icons-material/Agriculture';
+// import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import logo from "../../images/logo.png";
 import HomeIcon from '@mui/icons-material/Home';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 
 export default function Navbar() {
   const navigate = useNavigate();
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [agriPlannerOpen, setAgriPlannerOpen] = useState(false);
-  const [cropRecommendationOpen, setCropRecommendationOpen] = useState(false);
-
-  const handleAgriPlannerClick = (event) => {
-    event.stopPropagation();
-    setAgriPlannerOpen(!agriPlannerOpen);
-    setCropRecommendationOpen(false);
-
-  };
-
-  const handleCropRecommendationClick = (event) => {
-    event.stopPropagation();
-    setCropRecommendationOpen(!cropRecommendationOpen);
-  };
 
 
   const handleNavbarSectionClose = (event) => {
     setDrawerOpen(false);
-    setAgriPlannerOpen(false);
-    setCropRecommendationOpen(false);
+
 
   };
 
@@ -72,60 +57,13 @@ export default function Navbar() {
         </Link>
         <Divider />
 
-        {/* Agriculture Planner Section */}
-        <ListItemButton onClick={handleAgriPlannerClick}>
-          <AgricultureIcon style={{ opacity: "0.6", marginRight: "8px" }} />
-          <ListItemText primary="Agriculture Planner" />
-          <ExpandMoreIcon />
-        </ListItemButton>
-        <Collapse in={agriPlannerOpen} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-
-            {/* Flood protection guide */}
-            <Link to="/flood-protection-guide" style={{ textDecoration: 'none', color: 'inherit' }} onClick={handleNavbarSectionClose}>
-              <ListItemButton>
-                <ListItemText primary="Flood Protection Guide" />
-              </ListItemButton>
-            </Link>
-
-            {/* Crop Recommendation Section */}
-            <ListItemButton onClick={handleCropRecommendationClick}>
-              <ListItemText primary="Crop Recommendation" />
-              <ExpandMoreIcon />
-            </ListItemButton>
-            <Collapse in={cropRecommendationOpen} timeout="auto" unmountOnExit>
-              <List component="div" disablePadding>
-
-                <Link to="/location-based-prediction" style={{ textDecoration: 'none', color: 'inherit' }} onClick={handleNavbarSectionClose}>
-                  <ListItemButton sx={{ pl: 4 }}>
-                    <ListItemText primary="Location-Based" />
-                  </ListItemButton>
-                </Link>
-                <Link to="/parameter-based-prediction" style={{ textDecoration: 'none', color: 'inherit' }} onClick={handleNavbarSectionClose}>
-                  <ListItemButton sx={{ pl: 4 }}>
-                    <ListItemText primary="Parameter-Based" />
-                  </ListItemButton>
-                </Link>
-
-              </List>
-            </Collapse>
-
-            {/* Videos */}
-            <Link to="/farming-videos" style={{ textDecoration: 'none', color: 'inherit' }} onClick={handleNavbarSectionClose}>
-              <ListItemButton>
-                <ListItemText primary="Videos" />
-              </ListItemButton>
-            </Link>
-
-            {/* Flood protection guide */}
-            <Link to="/faqs" style={{ textDecoration: 'none', color: 'inherit' }} onClick={handleNavbarSectionClose}>
-              <ListItemButton>
-                <ListItemText primary="FAQs" />
-              </ListItemButton>
-            </Link>
-
-          </List>
-        </Collapse>
+        {/* User Details Section */}
+        <Link to="/user-details" style={{ textDecoration: 'none', color: 'inherit' }} onClick={handleNavbarSectionClose}>
+          <ListItemButton>
+            <PermIdentityIcon style={{ opacity: "0.6", marginRight: "8px" }} />
+            <ListItemText primary="User Details" />
+          </ListItemButton>
+        </Link>
 
         <Divider />
 
@@ -188,7 +126,7 @@ export default function Navbar() {
           // when i will add other expandable sections, i will add them here as well, so far we only have agriplanner 
           // and crop recommendation 
           setDrawerOpen(false);
-          setAgriPlannerOpen(false);
+
         }}
       >
         {list()}

@@ -25,7 +25,7 @@ router.get("/view/:userId", async (req, res) => {
         const fetchedNotes = await NotesModel.find({ userId });
 
         if (!fetchedNotes || fetchedNotes.length === 0) {
-            return res.status(404).json({ message: "Notes not found for this user" });
+            return res.status(404).send({ message: "Notes not found for this user" });
         }
 
         // Extract content from all fetched documents

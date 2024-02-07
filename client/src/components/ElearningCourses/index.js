@@ -11,6 +11,7 @@ export default function ElearningCourses() {
     const [notes, setNotes] = useState('')
     const [showSuccessAlert, setShowSuccessAlert] = useState(false);
     const [savedNotes, setSavedNotes] = useState([]);
+    const [showInfoAlert, setShowInfoAlert] = useState(false);
 
     const handleSaveNotes = async () => {
         const url = `http://localhost:5000/api/notes/save`;
@@ -55,8 +56,10 @@ export default function ElearningCourses() {
 
             }
         } catch (error) {
+            // If the status is 404(no notes), show message to user
             console.error("Error fetching notes:", error);
-            // Handle error, show an alert, or perform other actions
+            setShowInfoAlert(true);
+            setSavedNotes([]); // Clear savedNotes state
         }
     };
 
@@ -103,7 +106,7 @@ export default function ElearningCourses() {
                     <textarea class="form-control" id="textAreaExample" rows="4" value={notes} onChange={handleNotesChange} placeholder='Enter notes'></textarea>
                 </div>
 
-                {/* successa alert */}
+                {/* success alert */}
                 {showSuccessAlert && (
                     <Alert
                         severity="success"
@@ -111,6 +114,17 @@ export default function ElearningCourses() {
                         style={{ margin: '10px 10px' }}
                     >
                         Notes saved successfully!
+                    </Alert>
+                )}
+
+                {/* No notes found alert */}
+                {showInfoAlert && (
+                    <Alert
+                        severity="info"
+                        onClose={() => setShowInfoAlert(false)}
+                        style={{ margin: '10px 10px' }}
+                    >
+                        You haven't added any notes yet!
                     </Alert>
                 )}
 

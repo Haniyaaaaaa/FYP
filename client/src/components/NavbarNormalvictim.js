@@ -101,7 +101,7 @@ export default function Navbar() {
             </Link>
 
             {/* Quizzes */}
-            <Link to="/quiz" style={{ textDecoration: 'none', color: 'inherit' }} onClick={handleNavbarSectionClose}>
+            <Link to="/play-quiz" style={{ textDecoration: 'none', color: 'inherit' }} onClick={handleNavbarSectionClose}>
               <ListItemButton>
                 <ListItemText primary="Take Quiz" />
               </ListItemButton>
