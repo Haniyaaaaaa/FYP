@@ -3,6 +3,7 @@ import { Input, Modal, Table, Tooltip, Typography, message, } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import axios from "axios";
 import NavbarAdmin from './NavbarAdmin'
+import Footer from "../Footer";
 
 export default function UserDetails() {
     const [users, setUsers] = useState([]);
@@ -218,6 +219,10 @@ export default function UserDetails() {
                     style={{ marginBottom: 15 }}
                 />
             </Modal>
+
+            <div style={{ position: 'fixed', bottom: '0', width: '100%' }} >
+                <Footer />
+            </div>
         </>
     );
 

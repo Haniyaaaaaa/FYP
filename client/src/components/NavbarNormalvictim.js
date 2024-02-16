@@ -19,6 +19,7 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import Collapse from '@mui/material/Collapse';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CampaignIcon from '@mui/icons-material/Campaign';
+import RateReviewIcon from '@mui/icons-material/RateReview';
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -109,6 +110,16 @@ export default function Navbar() {
 
           </List>
         </Collapse>
+
+        <Divider />
+
+        {/* feedback Section */}
+        <Link to="/feedback" style={{ textDecoration: 'none', color: 'inherit' }} onClick={handleNavbarSectionClose}>
+          <ListItemButton>
+            <RateReviewIcon style={{ opacity: "0.6", marginRight: "8px" }} />
+            <ListItemText primary="Give Feedback" />
+          </ListItemButton>
+        </Link>
 
         <Divider />
 

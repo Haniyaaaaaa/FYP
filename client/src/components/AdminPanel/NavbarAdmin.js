@@ -19,6 +19,8 @@ import logo from "../../images/logo.png";
 import HomeIcon from '@mui/icons-material/Home';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
+import SummarizeIcon from '@mui/icons-material/Summarize';
+import FeedbackIcon from '@mui/icons-material/Feedback';
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -64,6 +66,27 @@ export default function Navbar() {
             <ListItemText primary="User Details" />
           </ListItemButton>
         </Link>
+
+        <Divider />
+
+        {/* Prediction Report Section */}
+        <Link to="/prediction-report" style={{ textDecoration: 'none', color: 'inherit' }} onClick={handleNavbarSectionClose}>
+          <ListItemButton>
+            <SummarizeIcon style={{ opacity: "0.6", marginRight: "8px" }} />
+            <ListItemText primary="Prediction Report" />
+          </ListItemButton>
+        </Link>
+
+        <Divider />
+
+        {/* User feedback Section */}
+        <Link to="/user-feedbacks" style={{ textDecoration: 'none', color: 'inherit' }} onClick={handleNavbarSectionClose}>
+          <ListItemButton>
+            <FeedbackIcon style={{ opacity: "0.6", marginRight: "8px" }} />
+            <ListItemText primary="User Feedback" />
+          </ListItemButton>
+        </Link>
+
 
         <Divider />
 

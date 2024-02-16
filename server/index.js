@@ -11,7 +11,7 @@ const updateProfileRoutes = require("./routes/updateProfile.js");
 const cropRecommendationRoutes = require("./routes/cropRec.js");
 const notesRoutes = require("./routes/notes.js");
 const quizRoutes = require("./routes/quiz.js");
-
+const feedbackRoutes = require("./routes/feedback.js");
 
 // database connection
 connection();
@@ -28,6 +28,7 @@ app.use("/api/update-profile", updateProfileRoutes);
 app.use("/api/crop-recommendation", cropRecommendationRoutes);
 app.use("/api/notes", notesRoutes);
 app.use("/api/quiz", quizRoutes);
+app.use("/api/feedback", feedbackRoutes);
 
 const port = process.env.PORT || 5000;
 app.listen(port, console.log(`Listening on port ${port}...`));
