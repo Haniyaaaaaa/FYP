@@ -33,6 +33,7 @@ import Resources from "./components/Resources";
 import Play from "./components/Quiz/play";
 import QuizSummary from "./components/Quiz/QuizSummary";
 import UserDetails from "./components/AdminPanel/UserDetails";
+import ThreeDModels from "./components/3dModels";
 
 
 function App() {
@@ -119,8 +120,8 @@ function App() {
           <Route path="/home-normalvictim" exact element={<HomeNormalvictim />} /> :
           <Route path="/home-normalvictim" exact element={<ErrorScreen />} />
         }
-
         {userToken && <Route path="/edit-profile" element={<EditProfile />} />}
+        {userToken && <Route path="/3d-Models" element={<ThreeDModels />} />}
 
         {userToken && <Route path="/farming-videos" element={<VideosFarming />} />}
         {userToken && <Route path="/faqs" element={<FAQ />} />}

@@ -1,0 +1,49 @@
+.border_design {
+	border-radius: 10px;
+	box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 20%),
+		0px 3px 4px 0px rgb(0 0 0 / 14%), 0px 1px 8px 0px rgb(0 0 0 / 12%);
+}
+
+.main_container{
+	width: 100%;
+	min-height: 100vh;
+	background-color: pink;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}
+.text_container{
+	text-align: left;
+	width: 100%;
+
+	padding-left: 9%;
+}
+.slider_container{
+	width: 80%;
+
+}
+
+.heading{
+	font-size: 30px;
+	color: black;
+	margin: 20px;
+	margin-bottom: 0px;
+}
+
+.playbutton {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	transition: opacity 0.3s ease;
+  }
+  
+  .playbutton:hover {
+	opacity: 1;
+	
+  }
