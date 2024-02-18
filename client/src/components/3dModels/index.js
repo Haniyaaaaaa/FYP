@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styles from "./styles.module.css";
@@ -12,11 +13,36 @@ import Slider from "react-slick";
 const ThreeDModels = () => {
   const [userRole, setUserRole] = useState("");
   const data = [
-    { url: "/models/image1.jpg", title: "model 1" },
-    { url: "/models/image1.jpg", title: "model 2" },
-    { url: "/models/image1.jpg", title: "model 3" },
-    { url: "/models/image1.jpg", title: "model 4" },
-    { url: "/models/image1.jpg", title: "model 5" },
+    {
+      id: 1,
+      url: "/models/image1.jpg",
+      title: "Model 1",
+      desc: "Some description is required  img elements must have an alt prop, either with meaningful text, or an empty string for decorative images",
+    },
+    {
+      id: 2,
+      url: "/models/image1.jpg",
+      title: "Model 2",
+      desc: "Some description is required  img elements must have an alt prop, either with meaningful text, or an empty string for decorative images",
+    },
+    {
+      id: 3,
+      url: "/models/image1.jpg",
+      title: "Model 3",
+      desc: "Some description is required  img elements must have an alt prop, either with meaningful text, or an empty string for decorative images",
+    },
+    {
+      id: 4,
+      url: "/models/image1.jpg",
+      title: "Model 4",
+      desc: "Some description is required  img elements must have an alt prop, either with meaningful text, or an empty string for decorative images",
+    },
+    {
+      id: 5,
+      url: "/models/image1.jpg",
+      title: "Model 5",
+      desc: "Some description is required  img elements must have an alt prop, either with meaningful text, or an empty string for decorative images",
+    },
   ];
 
   const url = `http://localhost:5000/api/update-profile`;
@@ -55,13 +81,19 @@ const ThreeDModels = () => {
         <div className={styles.slider_container}>
           <Slider {...settings}>
             {data.map((d) => (
-              <div className="p-2 relative group hover:translate-y-[-5px] transition-transform rounded ">
-                <img
-                  src={d.url}
-                  className="h-36 rounded hover:cursor-pointer"
-                />
-                <p style={{ color: "black" }}>{d.title}</p>
-              </div>
+              <Link
+                to={`/detail/${d.id}`}
+                state={{ data: { url: d.url, title: d.title, desc: d.desc } }}
+                key={d.id}
+              >
+                <div className="p-2 relative group hover:translate-y-[-5px] transition-transform rounded ">
+                  <img
+                    src={d.url}
+                    className="h-36 rounded hover:cursor-pointer"
+                  />
+                  <p style={{ color: "black" }}>{d.title}</p>
+                </div>
+              </Link>
             ))}
           </Slider>
         </div>

@@ -34,6 +34,7 @@ import Play from "./components/Quiz/play";
 import QuizSummary from "./components/Quiz/QuizSummary";
 import UserDetails from "./components/AdminPanel/UserDetails";
 import ThreeDModels from "./components/3dModels";
+import ModelView from "./components/3dModels/ModelView";
 import PredictionReport from "./components/AdminPanel/PredictionReport";
 import Feedback from "./components/Feedback/index";
 import UserFeedback from "./components/AdminPanel/UserFeedback";
@@ -153,6 +154,7 @@ function App() {
         )}
         {userToken && <Route path="/edit-profile" element={<EditProfile />} />}
         {userToken && <Route path="/3d-Models" element={<ThreeDModels />} />}
+        <Route path="/detail/:id" element={<ModelView />} />
 
         {userToken && (
           <Route path="/farming-videos" element={<VideosFarming />} />
