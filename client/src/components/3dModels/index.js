@@ -5,7 +5,6 @@ import styles from "./styles.module.css";
 import NavbarFarmer from "../NavbarFarmer";
 import NavbarAdmin from "../AdminPanel/NavbarAdmin";
 import NavbarNormalvictim from "../NavbarNormalvictim";
-
 import PlayButtonIcon from "@mui/icons-material/PlayCircle";
 
 import Slider from "react-slick";
@@ -58,9 +57,6 @@ const ThreeDModels = () => {
             {data.map((d) => (
               <div className="p-2 relative group hover:translate-y-[-5px] transition-transform rounded ">
                 <img src={d.url} className="rounded hover:cursor-pointer" />
-
-                {/* Material Icon for Play Button */}
-
                 <p style={{ color: "black" }}>{d.title}</p>
               </div>
             ))}
