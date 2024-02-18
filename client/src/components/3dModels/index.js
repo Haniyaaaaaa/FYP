@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import NavbarFarmer from "../NavbarFarmer";
-import NavbarAdmin from "../AdminPanel/NavbarAdmin";
-import NavbarNormalvictim from "../NavbarNormalvictim";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styles from "./styles.module.css";
+import NavbarFarmer from "../NavbarFarmer";
+import NavbarAdmin from "../AdminPanel/NavbarAdmin";
+import NavbarNormalvictim from "../NavbarNormalvictim";
+
 import PlayButtonIcon from "@mui/icons-material/PlayCircle";
 
 import Slider from "react-slick";
@@ -13,11 +13,11 @@ import Slider from "react-slick";
 const ThreeDModels = () => {
   const [userRole, setUserRole] = useState("");
   const data = [
-    "/models/image1.jpg",
-    "/models/image1.jpg",
-    "/models/image1.jpg",
-    "/models/image1.jpg",
-    "/models/image1.jpg",
+    { url: "/models/image1.jpg", title: "model 1" },
+    { url: "/models/image1.jpg", title: "model 2" },
+    { url: "/models/image1.jpg", title: "model 3" },
+    { url: "/models/image1.jpg", title: "model 4" },
+    { url: "/models/image1.jpg", title: "model 5" },
   ];
 
   const url = `http://localhost:5000/api/update-profile`;
@@ -56,11 +56,12 @@ const ThreeDModels = () => {
         <div className={styles.slider_container}>
           <Slider {...settings}>
             {data.map((d) => (
-              <div className="p-2 hover:translate-y-[-5px] transition-transform">
-                <img
-                  src={d}
-                  className="rounded transition-opacity hover:brightness-75"
-                ></img>
+              <div className="p-2 relative group hover:translate-y-[-5px] transition-transform rounded ">
+                <img src={d.url} className="rounded hover:cursor-pointer" />
+
+                {/* Material Icon for Play Button */}
+
+                <p style={{ color: "black" }}>{d.title}</p>
               </div>
             ))}
           </Slider>
@@ -73,14 +74,15 @@ const ThreeDModels = () => {
         <div className={styles.slider_container}>
           <Slider {...settings}>
             {data.map((d) => (
-              <div className="p-2 relative group hover:translate-y-[-5px] transition-transform rounded hover:brightness-75">
-                <img src={d} className="rounded" />
+              <div className="p-2 relative group hover:translate-y-[-5px] transition-transform rounded ">
+                <img src={d.url} className="rounded" />
 
                 {/* Material Icon for Play Button */}
                 <div className={styles.playbutton}>
-                  <PlayButtonIcon
-                    style={{ color: "white", height: "40", width: "40" }}
-                  />
+                  <PlayButtonIcon className={styles.button} />
+                  <div className={`rounded-bottom ${styles.title_container}`}>
+                    <p className={styles.title}>{d.title}</p>
+                  </div>
                 </div>
               </div>
             ))}

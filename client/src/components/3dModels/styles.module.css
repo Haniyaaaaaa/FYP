@@ -7,7 +7,7 @@
 .main_container{
 	width: 100%;
 	min-height: 100vh;
-	background-color: pink;
+	background-color: lightgray;
 	display: flex;
 	align-items: center;
 	flex-direction: column;
@@ -39,11 +39,38 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	flex-direction: column;
 	opacity: 0;
 	transition: opacity 0.3s ease;
+	padding-top: 48px;
+
   }
   
   .playbutton:hover {
 	opacity: 1;
 	
+  }
+  .button{
+	color: rgb(196, 196, 196);
+	height: 40px;
+	width: 40px;
+  }
+
+  .button:hover{
+	cursor: pointer;
+	color: white;
+  }
+  .title_container{
+	width: 93%;
+	height: 6vh;
+	padding-left: 10px;
+	margin-top: 20px;
+	background-color: rgba(0, 0, 0, 0.3);
+
+
+	
+  }
+  .title{
+	color: white;
+	font-size: 16px;
   }
