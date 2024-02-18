@@ -56,7 +56,10 @@ const ThreeDModels = () => {
           <Slider {...settings}>
             {data.map((d) => (
               <div className="p-2 relative group hover:translate-y-[-5px] transition-transform rounded ">
-                <img src={d.url} className="rounded hover:cursor-pointer" />
+                <img
+                  src={d.url}
+                  className="h-36 rounded hover:cursor-pointer"
+                />
                 <p style={{ color: "black" }}>{d.title}</p>
               </div>
             ))}
@@ -71,7 +74,7 @@ const ThreeDModels = () => {
           <Slider {...settings}>
             {data.map((d) => (
               <div className="p-2 relative group hover:translate-y-[-5px] transition-transform rounded ">
-                <img src={d.url} className="rounded" />
+                <img src={d.url} className="h-36 rounded" />
 
                 {/* Material Icon for Play Button */}
                 <div className={styles.playbutton}>

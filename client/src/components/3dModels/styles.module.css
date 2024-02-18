@@ -7,10 +7,10 @@
 .main_container{
 	width: 100%;
 	min-height: 100vh;
-	background-color: lightgray;
 	display: flex;
 	align-items: center;
 	flex-direction: column;
+	background-color: pink;
 }
 .text_container{
 	text-align: left;
@@ -52,8 +52,8 @@
   }
   .button{
 	color: rgb(196, 196, 196);
-	height: 40px;
-	width: 40px;
+	height: 40px !important;
+	width: 40px !important;
   }
 
   .button:hover{
@@ -61,7 +61,7 @@
 	color: white;
   }
   .title_container{
-	width: 93%;
+	width: 94%;
 	height: 6vh;
 	padding-left: 10px;
 	margin-top: 20px;
