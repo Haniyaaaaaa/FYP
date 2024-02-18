@@ -33,7 +33,13 @@ import Resources from "./components/Resources";
 import Play from "./components/Quiz/play";
 import QuizSummary from "./components/Quiz/QuizSummary";
 import UserDetails from "./components/AdminPanel/UserDetails";
+<<<<<<< HEAD
 import ThreeDModels from "./components/3dModels";
+=======
+import PredictionReport from "./components/AdminPanel/PredictionReport";
+import Feedback from "./components/Feedback/index";
+import UserFeedback from "./components/AdminPanel/UserFeedback";
+>>>>>>> f694d46ad0b126639d274f64d42687b02c67bcc9
 
 
 function App() {
@@ -145,6 +151,9 @@ function App() {
         {userToken && <Route path="/resources" element={<Resources />} />}
         {userToken && <Route path="/play-quiz" element={<Play />} />}
         {userToken && <Route path="/quiz-summary" element={<QuizSummary />} />}
+        {userToken && <Route path="/prediction-report" element={<PredictionReport />} />}
+        {userToken && <Route path="/feedback" element={<Feedback />} />}
+        {userToken && <Route path="/user-feedbacks" element={<UserFeedback />} />}
 
         <Route path="/signup" exact element={<Signup />} />
         <Route path="/login" exact element={<Login />} />

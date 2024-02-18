@@ -14,12 +14,21 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { Link } from "react-router-dom";
 import logo from "../images/logo.png";
+<<<<<<< HEAD
 import HomeIcon from "@mui/icons-material/Home";
 import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import Collapse from "@mui/material/Collapse";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import ViewInArIcon from "@mui/icons-material/ViewInAr";
+=======
+import HomeIcon from '@mui/icons-material/Home';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import Collapse from '@mui/material/Collapse';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import CampaignIcon from '@mui/icons-material/Campaign';
+import RateReviewIcon from '@mui/icons-material/RateReview';
+>>>>>>> f694d46ad0b126639d274f64d42687b02c67bcc9
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -143,6 +152,16 @@ export default function Navbar() {
             <ListItemText primary="3d Models" />
           </ListItemButton>
         </Link>
+        <Divider />
+
+        {/* feedback Section */}
+        <Link to="/feedback" style={{ textDecoration: 'none', color: 'inherit' }} onClick={handleNavbarSectionClose}>
+          <ListItemButton>
+            <RateReviewIcon style={{ opacity: "0.6", marginRight: "8px" }} />
+            <ListItemText primary="Give Feedback" />
+          </ListItemButton>
+        </Link>
+
         <Divider />
 
         {/* Edit Profile Section */}
