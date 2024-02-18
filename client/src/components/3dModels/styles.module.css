@@ -10,7 +10,7 @@
 	display: flex;
 	align-items: center;
 	flex-direction: column;
-	background-color: pink;
+	background-color: lightgrey;
 }
 .text_container{
 	text-align: left;
@@ -74,3 +74,5 @@
 	color: white;
 	font-size: 16px;
   }
+
+  
