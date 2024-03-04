@@ -12,3 +12,8 @@
 .desc{
     font-size: 18px;
 }
+
+.link{
+    columns: red;
+    text-decoration: none !important;
+}

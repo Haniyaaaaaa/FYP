@@ -85,6 +85,7 @@ const ThreeDModels = () => {
                 to={`/detail/${d.id}`}
                 state={{ data: { url: d.url, title: d.title, desc: d.desc } }}
                 key={d.id}
+                className={styles.link}
               >
                 <div className="p-2 relative group hover:translate-y-[-5px] transition-transform rounded ">
                   <img

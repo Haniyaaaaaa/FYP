@@ -1,11 +1,15 @@
 import { useState } from "react";
 import axios from "axios";
-import { Link, useNavigate  } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles.module.css";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [data, setData] = useState({ email: "", password: "", role: "normal victim" });
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+    role: "normal victim",
+  });
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
@@ -37,7 +41,7 @@ const Login = () => {
 
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("role", res.data.role);
-      window.dispatchEvent(new Event('storageChange'));
+      window.dispatchEvent(new Event("storageChange"));
 
       console.log(res.data.token);
       console.log(res.data.role);
@@ -49,8 +53,6 @@ const Login = () => {
       } else if (res.data.role === "normal victim") {
         navigate("/home-normalvictim");
       }
-
-
     } catch (error) {
       if (
         error.response &&
@@ -87,59 +89,70 @@ const Login = () => {
               className={styles.input}
             />
 
-            <label style={{ alignSelf: "flex-start", marginLeft: '17px' }}>
+            <label style={{ alignSelf: "flex-start", marginLeft: "17px" }}>
               <input
                 type="checkbox"
                 onChange={handleTogglePassword}
                 checked={showPassword}
-                style={{ margin: '5px' }}
+                style={{ margin: "5px" }}
               />
               Show Password
             </label>
 
-            <div style={{ alignSelf: "flex-start", margin: '5px', marginLeft: '17px'  }}>
+            <div
+              style={{
+                alignSelf: "flex-start",
+                margin: "5px",
+                marginLeft: "17px",
+              }}
+            >
               <label>Role:</label>
-              <label style={{ margin: '5px' }}>
+              <label style={{ margin: "5px" }}>
                 <input
                   type="radio"
                   name="role"
                   value="power admin"
                   checked={data.role === "power admin"}
                   onChange={handleChange}
-                  style={{ margin: '5px' }}
+                  style={{ margin: "5px" }}
                 />
                 Power Admin
               </label>
-              <label style={{ margin: '5px' }}>
+              <label style={{ margin: "5px" }}>
                 <input
                   type="radio"
                   name="role"
                   value="farmer"
                   checked={data.role === "farmer"}
                   onChange={handleChange}
-                  style={{ margin: '5px' }}
+                  style={{ margin: "5px" }}
                 />
                 Farmer
               </label>
-              <label style={{ margin: '5px' }}>
+              <label style={{ margin: "5px" }}>
                 <input
                   type="radio"
                   name="role"
                   value="normal victim"
                   checked={data.role === "normal victim"}
                   onChange={handleChange}
-                  style={{ margin: '5px' }}
+                  style={{ margin: "5px" }}
                 />
                 Normal Victim
               </label>
             </div>
 
-
-            <Link to="/forgot-password" style={{ alignSelf: "flex-end", textDecoration: "none", color: "#3bb19b", marginRight:'10px' }}>
-              <p >Forgot Password?</p>
+            <Link
+              to="/forgot-password"
+              style={{
+                alignSelf: "flex-end",
+                textDecoration: "none",
+                color: "#3bb19b",
+                marginRight: "10px",
+              }}
+            >
+              <p>Forgot Password?</p>
             </Link>
-
-
 
             {error && <div className={styles.error_msg}>{error}</div>}
             <button type="submit" className={styles.green_btn}>
