@@ -4,9 +4,61 @@ import NavbarAdmin from "../../AdminPanel/NavbarAdmin";
 import NavbarNormalvictim from "../../NavbarNormalvictim";
 import styles from "./styles.module.css";
 import { useLocation } from "react-router-dom";
+import Modal from "react-modal";
+import { IconButton } from "@mui/material";
+import DownloadButton from "@mui/icons-material/Download";
+import Select from "react-dropdown-select";
 
 const ModelView = () => {
+  let subtitle;
+  const customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+    },
+  };
+
+  const options = [
+    {
+      value: 1,
+      label: "Sydney",
+    },
+    {
+      value: 2,
+      label: "Melbourne",
+    },
+    {
+      value: 3,
+      label: "AB",
+    },
+    {
+      value: 4,
+      label: "C",
+    },
+    {
+      value: 5,
+      label: "D",
+    },
+  ];
+  const [modalIsOpen, setIsOpen] = React.useState(false);
   const [userRole, setUserRole] = useState("");
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    subtitle.style.color = "#f00";
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   useEffect(() => {
     //userId is retreived from local storage
@@ -38,11 +90,49 @@ const ModelView = () => {
           </div>
         </div>
         <div className="mt-10">
-          <button class="btn-default overflow-hidden relative w-64 bg-blue-500 text-white py-4 px-4 rounded-xl font-bold uppercase transition-all duration-100 hover:shadow-md border border-stone-100 hover:bg-blue-600 hover:-translate-y-[3px]">
+          <button
+            onClick={openModal}
+            class="btn-default overflow-hidden relative w-64 bg-blue-500 text-white py-4 px-4 rounded-xl font-bold uppercase transition-all duration-100 hover:shadow-md border border-stone-100 hover:bg-blue-600 hover:-translate-y-[3px]"
+          >
             <span class="relative">Calculate cost</span>
           </button>
         </div>
+        {/* calculate cost modal */}
       </div>
+      <Modal
+        isOpen={modalIsOpen}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Calculate Cost</h2>
+        <form>
+          <div class="flex flex-col">
+            <div>Location</div>
+            <Select
+              options={options}
+              values={[]}
+              onChange={(value) => console.log(value)}
+            />
+            <div>Sqft.</div>
+            <Select
+              options={options}
+              values={[]}
+              onChange={(value) => console.log(value)}
+            />
+          </div>
+          <button class="btn-default overflow-hidden relative w-50 bg-blue-500 text-white py-2 px-4 rounded-xl transition-all duration-100 hover:shadow-md border border-stone-100 hover:bg-blue-600 hover:-translate-y-[3px]">
+            <span class="relative">Calculate cost</span>
+          </button>
+          <IconButton>
+            <div>
+              Download pdf
+              <DownloadButton />
+            </div>
+          </IconButton>
+        </form>
+      </Modal>
     </React.Fragment>
   );
 };
