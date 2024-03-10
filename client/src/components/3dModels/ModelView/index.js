@@ -8,6 +8,7 @@ import Modal from "react-modal";
 import { IconButton } from "@mui/material";
 import DownloadButton from "@mui/icons-material/Download";
 import Select from "react-dropdown-select";
+import Interactive3DModel from "../Model/Interactive3dModel";
 
 const ModelView = () => {
   let subtitle;
@@ -82,7 +83,7 @@ const ModelView = () => {
       <div className="p-10">
         <h2>Model Details</h2>
         <div className={styles.main_container}>
-          <img src={url} className="h-60 rounded" />
+          <Interactive3DModel />
           <div className="ml-10">
             <p className={styles.title}>{title}</p>
             <p className={styles.desc}>{desc}</p>
@@ -122,7 +123,13 @@ const ModelView = () => {
               onChange={(value) => console.log(value)}
             />
           </div>
-          <button class="btn-default overflow-hidden relative w-50 bg-blue-500 text-white py-2 px-4 rounded-xl transition-all duration-100 hover:shadow-md border border-stone-100 hover:bg-blue-600 hover:-translate-y-[3px]">
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              console.log("clicked");
+            }}
+            class="btn-default overflow-hidden relative w-50 bg-blue-500 text-white py-2 px-4 rounded-xl transition-all duration-100 hover:shadow-md border border-stone-100 hover:bg-blue-600 hover:-translate-y-[3px]"
+          >
             <span class="relative">Calculate cost</span>
           </button>
           <IconButton>
