@@ -52,7 +52,11 @@ export default function index() {
                   Planting woodlands within farms can potentially have great effect on the rate of water that passes through the farm.
                 </p>
                 <Link to="/catchment-woodland-planting" target='_blank'>
-                  <button className="btn btn-primary">Learn More</button>
+                  <button style={{
+                    backgroundColor: "#3bb19b", color: "white", border: "none", "outline": "none", borderRadius: "10px",
+                    fontSize: "16px",
+                    cursor: "pointer",
+                  }} className="btn btn-primary">Learn More</button>
                 </Link>
               </div>
             </div>
@@ -65,7 +69,11 @@ export default function index() {
                 <h5 className="card-title">Riparian Planting</h5>
                 <p className="card-text">Planting riparian zones benefits the environment by filtering sediment and nutrients before they enter waterways.</p>
                 <Link to="/riparian-planting" target='_blank'>
-                  <button type="button" className="btn btn-primary">Learn More</button>
+                  <button type="button" style={{
+                    backgroundColor: "#3bb19b", color: "white", border: "none", "outline": "none", borderRadius: "10px",
+                    fontSize: "16px",
+                    cursor: "pointer",
+                  }} className="btn btn-primary">Learn More</button>
                 </Link>
               </div>
             </div>
@@ -79,7 +87,11 @@ export default function index() {
                 </h5>
                 <p className="card-text">These include tilling, cultivating, adding fertilizers and lime, growing cover crops, applying compost or manure, rotating crops.</p>
                 <Link to="/soil-management" target='_blank'>
-                  <button type="button" className="btn btn-primary">Learn More</button>
+                  <button type="button" style={{
+                    backgroundColor: "#3bb19b", color: "white", border: "none", "outline": "none", borderRadius: "10px",
+                    fontSize: "16px",
+                    cursor: "pointer",
+                  }} className="btn btn-primary">Learn More</button>
                 </Link>
               </div>
             </div>
@@ -94,7 +106,11 @@ export default function index() {
                   Sediment traps are small vegetated basins, which allow surface runoff to be guided through.
                 </p>
                 <Link to="/sediment" target='_blank'>
-                  <button type="button" className="btn btn-primary">Learn More</button>
+                  <button type="button" style={{
+                    backgroundColor: "#3bb19b", color: "white", border: "none", "outline": "none", borderRadius: "10px",
+                    fontSize: "16px",
+                    cursor: "pointer",
+                  }} className="btn btn-primary">Learn More</button>
                 </Link>
               </div>
             </div>
@@ -109,7 +125,11 @@ export default function index() {
                   Hedges can be used as a tool for natural flood management as they can help reduce and slow runoff from your farm
                 </p>
                 <Link to="/hedge" target='_blank'>
-                  <button type="button" className="btn btn-primary">Learn More</button>
+                  <button type="button" style={{
+                    backgroundColor: "#3bb19b", color: "white", border: "none", "outline": "none", borderRadius: "10px",
+                    fontSize: "16px",
+                    cursor: "pointer",
+                  }} className="btn btn-primary">Learn More</button>
                 </Link>
               </div>
             </div>
@@ -122,7 +142,11 @@ export default function index() {
                 <h5 className="card-title">Cross Drains for Forestry/Farm Tracks</h5>
                 <p className="card-text">a system that diverts water from a gateway, a track or farm yard to an area where it will not cause new erosion or runoff issues. </p>
                 <Link to="/crossdrains" target='_blank'>
-                  <button type="button" className="btn btn-primary">Learn More</button>
+                  <button type="button" style={{
+                    backgroundColor: "#3bb19b", color: "white", border: "none", "outline": "none", borderRadius: "10px",
+                    fontSize: "16px",
+                    cursor: "pointer",
+                  }} className="btn btn-primary">Learn More</button>
                 </Link>
               </div>
             </div>
@@ -135,7 +159,11 @@ export default function index() {
                 <h5 className="card-title">Wetland Creation</h5>
                 <p className="card-text">Wetland areas are naturally saturated areas of land whereby the water table is near ground level.</p>
                 <Link to="/wetland-creation" target='_blank'>
-                  <button type="button" className="btn btn-primary">Learn More</button>
+                  <button type="button" style={{
+                    backgroundColor: "#3bb19b", color: "white", border: "none", "outline": "none", borderRadius: "10px",
+                    fontSize: "16px",
+                    cursor: "pointer",
+                  }} className="btn btn-primary">Learn More</button>
                 </Link>
               </div>
             </div>
@@ -151,7 +179,11 @@ export default function index() {
                   accelerating natural erosion
                   process problems can arise.</p>
                 <Link to="/bank-restoration" target='_blank'>
-                  <button type="button" className="btn btn-primary">Learn More</button>
+                  <button type="button" style={{
+                    backgroundColor: "#3bb19b", color: "white", border: "none", "outline": "none", borderRadius: "10px",
+                    fontSize: "16px",
+                    cursor: "pointer",
+                  }} className="btn btn-primary">Learn More</button>
                 </Link>
               </div>
             </div>
@@ -159,13 +191,17 @@ export default function index() {
 
           <div className="col">
             <div className="card h-100">
-              <img src={instream} className="card-img-top" alt="Los Angeles Skyscrapers" style={{ height: '43vh' }}/>
+              <img src={instream} className="card-img-top" alt="Los Angeles Skyscrapers" style={{ height: '43vh' }} />
               <div className="card-body">
                 <h5 className="card-title">Instream Obstruction</h5>
                 <p className="card-text">Instream obstructions are used in natural flood management to slow the flow of a river and
                   reduce flooding downstream risk.</p>
                 <Link to="/instream-obstruction" target='_blank'>
-                  <button type="button" className="btn btn-primary">Learn More</button>
+                  <button type="button" style={{
+                    backgroundColor: "#3bb19b", color: "white", border: "none", "outline": "none", borderRadius: "10px",
+                    fontSize: "16px",
+                    cursor: "pointer",
+                  }} className="btn btn-primary">Learn More</button>
                 </Link>
               </div>
             </div>
@@ -174,7 +210,7 @@ export default function index() {
 
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   )
 }

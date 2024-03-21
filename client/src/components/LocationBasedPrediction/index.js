@@ -4,7 +4,6 @@ import Header from '../Header'
 import styles from "./styles.module.css";
 import Footer from '../Footer';
 import MyAutocomplete from './MyAutocomplete';
-import { Button } from '@mui/material';
 import axios from "axios";
 
 
@@ -52,18 +51,18 @@ export default function Index() {
       </div>
 
       <div className={styles.btn}>
-        <Button style={{
-          backgroundColor: "#3bb19b", color: "white", marginLeft: "30px", border: "none", "outline": "none", padding: "10px 15px", borderRadius: "25px", width: "14rem", height: '4rem',
-          fontWeight: "bold",
+        <button style={{
+          backgroundColor: "#3bb19b", color: "white", marginLeft: "30px", border: "none", "outline": "none", padding: "10px 15px", borderRadius: "10px",
           fontSize: "16px",
           cursor: "pointer",
           alignItems: 'center',
-          marginTop: '1rem'
+          marginTop: '2rem',
+          marginBottom: '2rem'
         }}
-          sx={{ mb: 4 }}
-          type="Button"
+          className="btn btn-primary"
+
           onClick={handleOnClick}
-        >Get Recommendation</Button>
+        >Get Recommendation</button>
       </div>
 
       {showRec && <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>

@@ -2,14 +2,16 @@ import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import NavbarNormalvictim from '../NavbarNormalvictim';
 import Footer from '../Footer';
-import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { CircularProgress } from '@mui/material';
+import { message } from "antd";
 
 const QuizComponent = () => {
     const [questions, setQuestions] = useState([]);
     const [userResponses, setUserResponses] = useState([]);
     const [attemptedQuestions, setAttemptedQuestions] = useState(0);
     const [timer, setTimer] = useState(300); // 5 minutes in seconds
+    const [submittingQuiz, setSubmittingQuiz] = useState(false);
 
     const navigate = useNavigate();
 
@@ -31,28 +33,36 @@ const QuizComponent = () => {
         fetchRandomQuestions();
     }, []); // The empty dependency array ensures that this effect runs only once when the component mounts
 
-    const handleSubmitQuiz = useCallback(() => {
-        const correct = questions.reduce((count, question, index) => {
-            if (userResponses[index] === question.correct_answer) {
-                return count + 1;
-            }
-            return count;
-        }, 0);
+    const handleSubmitQuiz = useCallback(async () => {
+        try {
+            setSubmittingQuiz(true);
 
-        const wrong = attemptedQuestions - correct;
+            const correct = questions.reduce((count, question, index) => {
+                if (userResponses[index] === question.correct_answer) {
+                    return count + 1;
+                }
+                return count;
+            }, 0);
 
-        navigate('/quiz-summary', {
-            state: {
-                correctAnswers: correct,
-                wrongAnswers: wrong,
-                attemptedQuestions,
-            },
-        });
+            const wrong = attemptedQuestions - correct;
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            navigate('/quiz-summary', {
+                state: {
+                    correctAnswers: correct,
+                    wrongAnswers: wrong,
+                    attemptedQuestions,
+                },
+            });
+        } catch (error) {
+            console.error('Error submitting quiz:', error);
+        } finally {
+            setSubmittingQuiz(false);
+        }
     }, [questions, userResponses, attemptedQuestions, navigate]);
 
 
     const handleTimeUp = useCallback(() => {
-        alert('Time is up! Quiz will be submitted.');
+        message.warning('Time is up! Quiz will be submitted.')
         handleSubmitQuiz();
     }, [handleSubmitQuiz]);
 
@@ -124,11 +134,11 @@ const QuizComponent = () => {
                 <ul>
                     {questions && questions.length > 0 ? (
                         questions.map((question, index) => (
-                            <li key={index}>
+                            <li key={index} style={{ listStyleType: 'none' }}>
                                 <p style={{ paddingTop: '15px', fontWeight: '600', fontSize: '18px' }}>{`${index + 1}. ${question.questionText}`}</p>
                                 <ul>
                                     {question.options && question.options.length > 0 && question.options.map((option, optionIndex) => (
-                                        <li key={optionIndex}>
+                                        <li key={optionIndex} style={{ listStyleType: 'none' }}>
                                             <input
                                                 type="radio"
                                                 id={`option-${index}-${optionIndex}`}
@@ -148,14 +158,17 @@ const QuizComponent = () => {
                 </ul>
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '50px', marginTop: '30px' }}>
-                <Button style={{
-                    backgroundColor: "#3bb19b", color: "white", border: "none", "outline": "none", paddingTop: "10px", paddingBottom: '10px', borderRadius: "30px", width: "140px",
-                    fontWeight: "bold",
-                    fontSize: "15px",
+            <div style={{ display: 'flex', marginLeft: '12.5rem', marginBottom: '50px', marginTop: '30px' }}>
+                <button style={{
+                    backgroundColor: "#3bb19b", color: "white", border: "none", "outline": "none", paddingTop: "10px", paddingBottom: '10px', borderRadius: "10px",
+                    fontSize: "16px",
                     cursor: "pointer",
-                }}
-                    onClick={handleSubmitQuiz}>Submit Quiz</Button>
+                }} className="btn btn-primary"
+                    onClick={handleSubmitQuiz} disabled={submittingQuiz} // Disable the button when submitting
+                >
+                    {submittingQuiz ? <CircularProgress size={20} style={{ marginRight: '8px' }} /> : null}
+                    Submit Quiz
+                </button>
             </div>
 
 

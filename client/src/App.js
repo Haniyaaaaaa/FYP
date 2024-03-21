@@ -35,7 +35,11 @@ import QuizSummary from "./components/Quiz/QuizSummary";
 import UserDetails from "./components/AdminPanel/UserDetails";
 import PredictionReport from "./components/AdminPanel/PredictionReport";
 import Feedback from "./components/Feedback/index";
+import Complaint from "./components/Complaint/MakeComplaint";
 import UserFeedback from "./components/AdminPanel/UserFeedback";
+import UserComplaints from "./components/AdminPanel/UserComplaints";
+import AdminDashboard from "./components/AdminPanel/AdminDashboard";
+import ViewComplaint from "./components/Complaint/ViewComplaint";
 
 
 function App() {
@@ -74,7 +78,6 @@ function App() {
         {/* if user is not loged in, display landing page of the website */}
 
         {!userToken && <Route path="/home-farmer" exact element={<LandingPage />} />}
-        {!userToken && <Route path="/home-admin" exact element={<LandingPage />} />}
         {!userToken && <Route path="/home-normalvictim" exact element={<LandingPage />} />}
         {!userToken && <Route path="/" exact element={<LandingPage />} />}
         {!userToken && <Route path="/farming-videos" exact element={<LandingPage />} />}
@@ -112,11 +115,11 @@ function App() {
           <Route path="/home-farmer" exact element={<ErrorScreen />} />
         }
 
-        {userToken && userRole === 'power admin' ?
+        {/* {userToken && userRole === 'power admin' ?
           <Route path="/home-admin" exact element={<HomeAdmin />} /> :
           <Route path="/home-admin" exact element={<ErrorScreen />} />
 
-        }
+        } */}
 
         {userToken && userRole === 'normal victim' ?
           <Route path="/home-normalvictim" exact element={<HomeNormalvictim />} /> :
@@ -150,6 +153,11 @@ function App() {
         {userToken && <Route path="/prediction-report" element={<PredictionReport />} />}
         {userToken && <Route path="/feedback" element={<Feedback />} />}
         {userToken && <Route path="/user-feedbacks" element={<UserFeedback />} />}
+        {userToken && <Route path="/complaint" element={<Complaint />} />}
+        {userToken && <Route path="/view-complaint" element={<ViewComplaint />} />}
+        {userToken && <Route path="/user-complaints" element={<UserComplaints />} />}
+        {userToken && <Route path="/admin-dashboard" element={<AdminDashboard />} />}
+
 
         <Route path="/signup" exact element={<Signup />} />
         <Route path="/login" exact element={<Login />} />

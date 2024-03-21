@@ -48,7 +48,7 @@ export default function ResearchPaper() {
                         We investigated the impact of flood protection works on flood risk in Mandra, Greece, using integrated hydrological and hydrodynamic calculations. The study revealed a significant reduction (53–89%) in inundation areas and improvements in key risk indicators, demonstrating the effectiveness of the implemented protection measures.
                     </MDBCardText>
                     <Link to="https://www.mdpi.com/2073-4441/14/23/3936" target='_blank'>
-                        <MDBBtn>Read More</MDBBtn>
+                        <MDBBtn style={{ backgroundColor: '#3bb19b', border: "none", "outline": "none", borderRadius: "10px" }}>Read More</MDBBtn>
                     </Link>
                 </MDBCardBody>
             </MDBCard>
@@ -60,7 +60,7 @@ export default function ResearchPaper() {
                         Climate change and socioeconomic developments are increasing the frequency and severity of floods. Flood management is widely recognized as an effective way to reduce the adverse consequences, and a more resilient and sustainable flood management approach has been the goal in recent studies.
                     </MDBCardText>
                     <Link to="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9713350/" target='_blank'>
-                        <MDBBtn>Read More</MDBBtn>
+                        <MDBBtn style={{ backgroundColor: '#3bb19b', border: "none", "outline": "none", borderRadius: "10px" }}>Read More</MDBBtn>
                     </Link>
                 </MDBCardBody>
             </MDBCard>
@@ -72,7 +72,7 @@ export default function ResearchPaper() {
                         Individual precautionary behaviour in response to flooding can considerably reduce flood impacts. Therefore, understanding its drivers and temporal dynamics is of high interest for risk management and communication. Previous studies are mostly based on temporally limited data by using cross-sectional surveys.
                     </MDBCardText>
                     <Link to="https://www.sciencedirect.com/science/article/abs/pii/S2212420923003151" target='_blank'>
-                        <MDBBtn>Read More</MDBBtn>
+                        <MDBBtn style={{ backgroundColor: '#3bb19b', border: "none", "outline": "none", borderRadius: "10px" }}>Read More</MDBBtn>
                     </Link>
                 </MDBCardBody>
             </MDBCard>
@@ -84,7 +84,7 @@ export default function ResearchPaper() {
                         Private precaution is an important component in contemporary flood risk management and climate adaptation. However, quantitative knowledge about vulnerability reduction via private precautionary measures is scarce and their effects are hardly considered in loss modeling and risk assessments.
                     </MDBCardText>
                     <Link to="https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2018EF000994" target='_blank'>
-                        <MDBBtn>Read More</MDBBtn>
+                        <MDBBtn style={{ backgroundColor: '#3bb19b', border: "none", "outline": "none", borderRadius: "10px" }}>Read More</MDBBtn>
                     </Link>
                 </MDBCardBody>
             </MDBCard>
@@ -96,7 +96,7 @@ export default function ResearchPaper() {
                         Private flood precautionary measures have proven to reduce flood damage effectively. Integration of these measures into flood response systems can improve flood risk management in high-risk areas such as Ho Chi Minh City (HCMC). Since uptake of such measures is voluntary, it is important to know what drives householders to implement precautionary measures.
                     </MDBCardText>
                     <Link to="https://nhess.copernicus.org/articles/23/1125/2023/" target='_blank'>
-                        <MDBBtn>Read More</MDBBtn>
+                        <MDBBtn style={{ backgroundColor: '#3bb19b', border: "none", "outline": "none", borderRadius: "10px" }}>Read More</MDBBtn>
                     </Link>
                 </MDBCardBody>
             </MDBCard>
@@ -108,7 +108,7 @@ export default function ResearchPaper() {
                         Based on the literature review, this paper synthesizes recent state of knowledge on flood risk perception and related human behaviors. The main attention is paid to private precautionary and mitigation measures, and the reasons why these are (not) adopted by agents such as individual households. Results of a wide range of relevant studies are presented and critically examined.
                     </MDBCardText>
                     <Link to="https://www.mdpi.com/2073-4441/13/2/140" target='_blank'>
-                        <MDBBtn>Read More</MDBBtn>
+                        <MDBBtn style={{ backgroundColor: '#3bb19b', border: "none", "outline": "none", borderRadius: "10px" }}>Read More</MDBBtn>
                     </Link>
                 </MDBCardBody>
             </MDBCard>
@@ -120,7 +120,7 @@ export default function ResearchPaper() {
                         Private precautionary measures play an increasingly important role in flood risk management. The degree to which private precautionary measures mitigate flood risk depends mainly on the type of measure (and how effective it is) and how frequently and successfully it is implemented.
                     </MDBCardText>
                     <Link to="https://www.sciencedirect.com/science/article/abs/pii/S2468312420300225" target='_blank'>
-                        <MDBBtn>Read More</MDBBtn>
+                        <MDBBtn style={{ backgroundColor: '#3bb19b', border: "none", "outline": "none", borderRadius: "10px" }}>Read More</MDBBtn>
                     </Link>
                 </MDBCardBody>
             </MDBCard>

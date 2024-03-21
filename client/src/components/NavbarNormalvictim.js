@@ -20,11 +20,13 @@ import Collapse from '@mui/material/Collapse';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CampaignIcon from '@mui/icons-material/Campaign';
 import RateReviewIcon from '@mui/icons-material/RateReview';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
 export default function Navbar() {
   const navigate = useNavigate();
   const [awarnessCampaignOpen, setAwarnessCampaignOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [complaintOpen, setComplaintOpen] = useState(false);
 
   const handleAwarnessCampaignClick = (event) => {
     event.stopPropagation();
@@ -32,9 +34,18 @@ export default function Navbar() {
 
   };
 
+  const handleComplaintClick = (event) => {
+    event.stopPropagation();
+    setComplaintOpen(!complaintOpen);
+
+  };
+
+
   const handleNavbarSectionClose = (event) => {
     setDrawerOpen(false);
     setAwarnessCampaignOpen(false);
+    setComplaintOpen(false);
+
   };
 
   const handleLogout = () => {
@@ -121,6 +132,32 @@ export default function Navbar() {
           </ListItemButton>
         </Link>
 
+
+        <Divider />
+
+        {/* Complaint Section */}
+        <ListItemButton onClick={handleComplaintClick}>
+          <ErrorOutlineIcon style={{ opacity: "0.6", marginRight: "8px" }} />
+          <ListItemText primary="Complaint" />
+          <ExpandMoreIcon />
+        </ListItemButton>
+        <Collapse in={complaintOpen} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+
+            <Link to="/complaint" style={{ textDecoration: 'none', color: 'inherit' }} onClick={handleNavbarSectionClose}>
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemText primary="Make Complaint" />
+              </ListItemButton>
+            </Link>
+            <Link to="/view-complaint" style={{ textDecoration: 'none', color: 'inherit' }} onClick={handleNavbarSectionClose}>
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemText primary="View Complaint" />
+              </ListItemButton>
+            </Link>
+
+          </List>
+        </Collapse>
+
         <Divider />
 
         {/* Edit Profile Section */}
@@ -189,6 +226,7 @@ export default function Navbar() {
           // and crop recommendation 
           setDrawerOpen(false);
           setAwarnessCampaignOpen(false);
+          setComplaintOpen(false);
         }}
       >
         {list()}

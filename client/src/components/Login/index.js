@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { Link, useNavigate  } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles.module.css";
 
 const Login = () => {
@@ -43,7 +43,7 @@ const Login = () => {
       console.log(res.data.role);
 
       if (res.data.role === "power admin") {
-        navigate("/home-admin");
+        navigate("/admin-dashboard");
       } else if (res.data.role === "farmer") {
         navigate("/home-farmer");
       } else if (res.data.role === "normal victim") {
@@ -97,7 +97,7 @@ const Login = () => {
               Show Password
             </label>
 
-            <div style={{ alignSelf: "flex-start", margin: '5px', marginLeft: '17px'  }}>
+            <div style={{ alignSelf: "flex-start", margin: '5px', marginLeft: '17px' }}>
               <label>Role:</label>
               <label style={{ margin: '5px' }}>
                 <input
@@ -135,7 +135,7 @@ const Login = () => {
             </div>
 
 
-            <Link to="/forgot-password" style={{ alignSelf: "flex-end", textDecoration: "none", color: "#3bb19b", marginRight:'10px' }}>
+            <Link to="/forgot-password" style={{ alignSelf: "flex-end", textDecoration: "none", color: "#3bb19b", marginRight: '10px' }}>
               <p >Forgot Password?</p>
             </Link>
 
