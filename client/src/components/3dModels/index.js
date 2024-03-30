@@ -7,7 +7,6 @@ import NavbarFarmer from "../NavbarFarmer";
 import NavbarAdmin from "../AdminPanel/NavbarAdmin";
 import NavbarNormalvictim from "../NavbarNormalvictim";
 import PlayButtonIcon from "@mui/icons-material/PlayCircle";
-
 import Slider from "react-slick";
 
 const ThreeDModels = () => {
@@ -75,6 +74,7 @@ const ThreeDModels = () => {
       <div className={styles.main_container}>
         <div className={styles.text_container}>
           <h2 className={styles.heading}>Models</h2>
+          <p className="text-sm ml-5 mt-1">Flood resilient models</p>
         </div>
 
         {/* image slider */}
@@ -95,28 +95,6 @@ const ThreeDModels = () => {
                   <p style={{ color: "black" }}>{d.title}</p>
                 </div>
               </Link>
-            ))}
-          </Slider>
-        </div>
-
-        <div className={styles.text_container}>
-          <h2 className={styles.heading}>Videos</h2>
-        </div>
-        {/* video slider */}
-        <div className={styles.slider_container}>
-          <Slider {...settings}>
-            {data.map((d) => (
-              <div className="p-2 relative group hover:translate-y-[-5px] transition-transform rounded ">
-                <img src={d.url} className="h-36 rounded" />
-
-                {/* Material Icon for Play Button */}
-                <div className={styles.playbutton}>
-                  <PlayButtonIcon className={styles.button} />
-                  <div className={`rounded-bottom ${styles.title_container}`}>
-                    <p className={styles.title}>{d.title}</p>
-                  </div>
-                </div>
-              </div>
             ))}
           </Slider>
         </div>

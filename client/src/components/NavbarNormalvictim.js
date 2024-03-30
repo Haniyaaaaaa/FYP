@@ -25,11 +25,16 @@ import RateReviewIcon from "@mui/icons-material/RateReview";
 export default function Navbar() {
   const navigate = useNavigate();
   const [awarnessCampaignOpen, setAwarnessCampaignOpen] = useState(false);
+  const [open3d, setOpen3d] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handleAwarnessCampaignClick = (event) => {
     event.stopPropagation();
     setAwarnessCampaignOpen(!awarnessCampaignOpen);
+  };
+  const handleOpen3d = (event) => {
+    event.stopPropagation();
+    setOpen3d(!open3d);
   };
 
   const handleNavbarSectionClose = (event) => {
@@ -132,16 +137,35 @@ export default function Navbar() {
           </List>
         </Collapse>
         {/* 3d Models Section */}
-        <Link
-          to="/3d-models"
-          style={{ textDecoration: "none", color: "inherit" }}
-          onClick={handleNavbarSectionClose}
-        >
-          <ListItemButton>
-            <ViewInArIcon style={{ opacity: "0.6", marginRight: "8px" }} />
-            <ListItemText primary="3d Models" />
-          </ListItemButton>
-        </Link>
+        <ListItemButton onClick={handleOpen3d}>
+          <ViewInArIcon style={{ opacity: "0.6", marginRight: "8px" }} />
+          <ListItemText primary="3d Models" />
+          <ExpandMoreIcon />
+        </ListItemButton>
+
+        <Collapse in={open3d} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            {/* Documentaries on Flood History */}
+            <Link
+              to="/3d-models"
+              style={{ textDecoration: "none", color: "inherit" }}
+              onClick={handleNavbarSectionClose}
+            >
+              <ListItemButton>
+                <ListItemText primary="View models" />
+              </ListItemButton>
+            </Link>
+            <Link
+              to="/model-videos"
+              style={{ textDecoration: "none", color: "inherit" }}
+              onClick={handleNavbarSectionClose}
+            >
+              <ListItemButton>
+                <ListItemText primary="Documentaries on Flood History" />
+              </ListItemButton>
+            </Link>
+          </List>
+        </Collapse>
         <Divider />
 
         {/* feedback Section */}

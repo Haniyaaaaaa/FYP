@@ -77,3 +77,6 @@ function Interactive3DModel({ width = "700px", height = "300px" }) {
 }
 
 export default Interactive3DModel;
+
+
+

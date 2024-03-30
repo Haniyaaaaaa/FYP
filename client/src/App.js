@@ -27,6 +27,7 @@ import LocationBasedPrediction from "./components/LocationBasedPrediction/index"
 import ParameterBasedPrediction from "./components/ParameterBasedPrediction/index";
 import ErrorScreen from "./components/ErrorScreen";
 import Documentaries from "./components/Documentries";
+import ModelVideos from "./components/3dModelVideos";
 import ElearningCourses from "./components/ElearningCourses";
 import ResearchPaper from "./components/ResearchPaper";
 import Resources from "./components/Resources";
@@ -204,6 +205,7 @@ function App() {
         {userToken && (
           <Route path="/documentaries" element={<Documentaries />} />
         )}
+        {userToken && <Route path="/model-videos" element={<ModelVideos />} />}
         {userToken && (
           <Route path="/e-Learning-Courses" element={<ElearningCourses />} />
         )}

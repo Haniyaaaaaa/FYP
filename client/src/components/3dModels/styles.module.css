@@ -6,16 +6,17 @@
 
 .main_container{
 	width: 100%;
-	min-height: 100vh;
+	height: 86vh;
 	display: flex;
 	align-items: center;
 	flex-direction: column;
 	background-color: lightgrey;
+	padding-top: 40px;
+
 }
 .text_container{
 	text-align: left;
 	width: 100%;
-
 	padding-left: 9%;
 }
 .slider_container{
@@ -26,7 +27,7 @@
 .heading{
 	font-size: 30px;
 	color: black;
-	margin: 20px;
+	margin-left: 20px;
 	margin-bottom: 0px;
 }
 
