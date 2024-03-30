@@ -44,8 +44,8 @@ router.get("/get-complaint/:userId", async (req, res) => {
     }
 });
 
+//on admin panel
 router.get("/fetchUser-complaints", async (req, res) => {
-    console.log("hello world")
     const complaints = await ComplaintModel.find({ responded: false })
         .populate({
             path: 'userId',
@@ -75,10 +75,6 @@ router.get("/fetchUser-complaints", async (req, res) => {
     res.json(flattenedComplaints);
 
 });
-
-
-
-
 
 router.post('/save-response/:complaintId', async (req, res) => {
     const { complaintId } = req.params;

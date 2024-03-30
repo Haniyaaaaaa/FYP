@@ -21,12 +21,14 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CampaignIcon from '@mui/icons-material/Campaign';
 import RateReviewIcon from '@mui/icons-material/RateReview';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import SafetyCheckIcon from '@mui/icons-material/SafetyCheck';
 
 export default function Navbar() {
   const navigate = useNavigate();
   const [awarnessCampaignOpen, setAwarnessCampaignOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [complaintOpen, setComplaintOpen] = useState(false);
+  const [renewalAssistOpen, setRenewalAssistOpen] = useState(false);
 
   const handleAwarnessCampaignClick = (event) => {
     event.stopPropagation();
@@ -40,11 +42,18 @@ export default function Navbar() {
 
   };
 
+  const handleRenewalAssistClick = (event) => {
+    event.stopPropagation();
+    setRenewalAssistOpen(!renewalAssistOpen);
+
+  };
+
 
   const handleNavbarSectionClose = (event) => {
     setDrawerOpen(false);
     setAwarnessCampaignOpen(false);
     setComplaintOpen(false);
+    setRenewalAssistOpen(false);
 
   };
 
@@ -116,6 +125,31 @@ export default function Navbar() {
             <Link to="/play-quiz" style={{ textDecoration: 'none', color: 'inherit' }} onClick={handleNavbarSectionClose}>
               <ListItemButton>
                 <ListItemText primary="Take Quiz" />
+              </ListItemButton>
+            </Link>
+
+          </List>
+        </Collapse>
+
+        <Divider />
+
+        {/* Flood Recovery and Renewal Assist Section */}
+        <ListItemButton onClick={handleRenewalAssistClick}>
+          <SafetyCheckIcon style={{ opacity: "0.6", marginRight: "8px" }} />
+          <ListItemText primary="Flood Recovery and Renewal Assist" />
+          <ExpandMoreIcon />
+        </ListItemButton>
+        <Collapse in={renewalAssistOpen} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+
+            <Link to="/pre-flood-checklist" style={{ textDecoration: 'none', color: 'inherit' }} onClick={handleNavbarSectionClose}>
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemText primary="Pre-Flood Recovery Checklist" />
+              </ListItemButton>
+            </Link>
+            <Link to="/post-flood-checklist" style={{ textDecoration: 'none', color: 'inherit' }} onClick={handleNavbarSectionClose}>
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemText primary="Post-Flood Recovery Checklist" />
               </ListItemButton>
             </Link>
 
@@ -227,6 +261,7 @@ export default function Navbar() {
           setDrawerOpen(false);
           setAwarnessCampaignOpen(false);
           setComplaintOpen(false);
+          setRenewalAssistOpen(false);
         }}
       >
         {list()}

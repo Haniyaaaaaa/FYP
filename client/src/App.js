@@ -40,6 +40,8 @@ import UserFeedback from "./components/AdminPanel/UserFeedback";
 import UserComplaints from "./components/AdminPanel/UserComplaints";
 import AdminDashboard from "./components/AdminPanel/AdminDashboard";
 import ViewComplaint from "./components/Complaint/ViewComplaint";
+import PreFloodChecklist from "./components/RecoveryAndRenewalAssist/PreFloodChecklist";
+import PostFloodChecklist from "./components/RecoveryAndRenewalAssist/PostFloodChecklist";
 
 
 function App() {
@@ -157,6 +159,8 @@ function App() {
         {userToken && <Route path="/view-complaint" element={<ViewComplaint />} />}
         {userToken && <Route path="/user-complaints" element={<UserComplaints />} />}
         {userToken && <Route path="/admin-dashboard" element={<AdminDashboard />} />}
+        {userToken && <Route path="/pre-flood-checklist" element={<PreFloodChecklist />} />}
+        {userToken && <Route path="/post-flood-checklist" element={<PostFloodChecklist />} />}
 
 
         <Route path="/signup" exact element={<Signup />} />

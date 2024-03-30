@@ -4,7 +4,7 @@ import NavbarNormalvictim from '../NavbarNormalvictim';
 import Footer from '../Footer';
 import { useNavigate } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
-import { message } from "antd";
+import { Modal, message } from "antd";
 
 const QuizComponent = () => {
     const [questions, setQuestions] = useState([]);
@@ -33,7 +33,19 @@ const QuizComponent = () => {
         fetchRandomQuestions();
     }, []); // The empty dependency array ensures that this effect runs only once when the component mounts
 
-    const handleSubmitQuiz = useCallback(async () => {
+    const handleSubmitQuiz = async () => {
+        Modal.confirm({
+            title: 'Are you sure you want to submit the quiz?',
+            onOk() {
+                submitQuiz();
+            },
+            onCancel() {
+                message.info('Quiz submission canceled.');
+            },
+        });
+    };
+
+    const submitQuiz = useCallback(async () => {
         try {
             setSubmittingQuiz(true);
 
@@ -63,8 +75,8 @@ const QuizComponent = () => {
 
     const handleTimeUp = useCallback(() => {
         message.warning('Time is up! Quiz will be submitted.')
-        handleSubmitQuiz();
-    }, [handleSubmitQuiz]);
+        submitQuiz();
+    }, [submitQuiz]);
 
 
     useEffect(() => {

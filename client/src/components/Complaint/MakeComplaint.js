@@ -47,7 +47,7 @@ const ComplaintForm = () => {
 
     return (
         <>
-            <div>
+            <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
                 {userRole === 'farmer' ? <NavbarFarmer /> : <NavbarNormalvictim />}
 
                 <div style={{
@@ -86,7 +86,7 @@ const ComplaintForm = () => {
                         Submit
                     </button>
                 </div>
-                <Footer />
+                <div style={{ bottom: "0", width: "100%", marginTop: 'auto' }}><Footer /></div>
             </div>
         </>
     );

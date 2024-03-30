@@ -52,7 +52,6 @@ router.get("/:id/verify/:token", async (req, res) => {
 		token: req.params.token,
 	});
 
-	console.log("");
 	console.log("user id is: " + req.params.id);
 	console.log("token is: " + req.params.token);
 	if (token) { console.log("present token: "); }

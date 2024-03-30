@@ -126,7 +126,7 @@ export default function ElearningCourses() {
                 }}
             >
                 {/* Heading */}
-                <h1 style={{ color: 'rgba(59, 177, 155, 1)', marginLeft: '30px', marginTop: '10px', fontSize: '55px' }}>E-LEARNING RESOURCES ON FLOOD PREPAREDNESS</h1>
+                <h1 style={{ color: 'rgba(59, 177, 155, 1)', marginLeft: '30px', marginTop: '10px', fontSize: '55px' }}>E-LEARNING COURSE ON FLOOD PREPAREDNESS</h1>
 
                 {/* Description */}
                 <div style={{ marginLeft: '30px', marginTop: '20px' }}>

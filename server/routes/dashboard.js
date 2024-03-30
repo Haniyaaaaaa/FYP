@@ -3,7 +3,6 @@ const ComplaintModel = require("../models/ComplaintModel");
 const { UserModel } = require("../models/UserModel");
 const FeedbackModel = require("../models/FeedbackModel");
 
-
 router.get("/dashboard-records", async (req, res) => {
     try {
         const totalNormalVictims = await UserModel.countDocuments({ role: 'normal victim' });

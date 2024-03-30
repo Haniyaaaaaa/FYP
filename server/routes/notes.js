@@ -20,7 +20,6 @@ router.get("/view/:userId", async (req, res) => {
 
     try {
         const { userId } = req.params;
-
         // Use userId to fetch notes from the database
         const fetchedNotes = await NotesModel.find({ userId });
 

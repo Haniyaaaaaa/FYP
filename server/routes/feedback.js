@@ -9,7 +9,6 @@ router.post("/save", async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
-
         const { firstName, lastName, email } = user
 
         const newFeedback = new FeedbackModel({ firstName, lastName, email, feedback, rating }).save();
