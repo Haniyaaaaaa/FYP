@@ -1,16 +1,16 @@
 const router = require("express").Router();
-const ChecklistModel = require("../models/ChecklistModel");
+const PostFloodChecklistModel = require("../models/PostFloodChecklistModel");
 
-router.post('/addTask', async (req, res) => {
+router.post('/addTaskk', async (req, res) => {
     try {
         const { task, userId } = req.body;
 
         // Find or create checklist for the user
-        let checklist = await ChecklistModel.findOne({ userId });
+        let checklist = await PreFloodChecklistModel.findOne({ userId });
 
         if (!checklist) {
             // Create new checklist if it doesn't exist
-            checklist = new ChecklistModel({ userId: userId, items: [] });
+            checklist = new PreFloodChecklistModel({ userId: userId, items: [] });
         }
 
         // Add new task to checklist
@@ -28,12 +28,12 @@ router.post('/addTask', async (req, res) => {
     }
 });
 
-router.get('/getChecklist/:userId', async (req, res) => {
+router.get('/getChecklistt/:userId', async (req, res) => {
     try {
         const userId = req.params.userId;
 
         // Retrieve checklist tasks based on userID
-        const checklistTasks = await ChecklistModel.find({ userId });
+        const checklistTasks = await PreFloodChecklistModel.find({ userId });
         const allTasks = checklistTasks.map(task => task.items.map(item => item.task));
         const flattenedTasks = allTasks.flat();
 

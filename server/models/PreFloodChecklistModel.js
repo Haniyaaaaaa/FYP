@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { UserModel } = require("../models/UserModel");
+const { UserModel } = require("./UserModel");
 
 // Define checklist item schema
 const checklistItemSchema = new mongoose.Schema({
@@ -14,7 +14,7 @@ const checklistItemSchema = new mongoose.Schema({
 });
 
 // Define checklist schema
-const ChecklistSchema = new mongoose.Schema({
+const PreFloodChecklistSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'UserModel',
@@ -24,6 +24,5 @@ const ChecklistSchema = new mongoose.Schema({
 });
 
 // Create checklist model
-const Checklist = mongoose.model('checklist', ChecklistSchema);
+module.exports = mongoose.model('preflood-checklist', PreFloodChecklistSchema);
 
-module.exports = Checklist;
