@@ -20,12 +20,16 @@ import AgricultureIcon from '@mui/icons-material/Agriculture';
 import HomeIcon from '@mui/icons-material/Home';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import RateReviewIcon from '@mui/icons-material/RateReview';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import SafetyCheckIcon from '@mui/icons-material/SafetyCheck';
 
 export default function Navbar() {
   const navigate = useNavigate();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [agriPlannerOpen, setAgriPlannerOpen] = useState(false);
   const [cropRecommendationOpen, setCropRecommendationOpen] = useState(false);
+  const [complaintOpen, setComplaintOpen] = useState(false);
+  const [renewalAssistOpen, setRenewalAssistOpen] = useState(false);
 
   const handleAgriPlannerClick = (event) => {
     event.stopPropagation();
@@ -39,12 +43,23 @@ export default function Navbar() {
     setCropRecommendationOpen(!cropRecommendationOpen);
   };
 
+  const handleComplaintClick = (event) => {
+    event.stopPropagation();
+    setComplaintOpen(!complaintOpen);
+  };
+
+  const handleRenewalAssistClick = (event) => {
+    event.stopPropagation();
+    setRenewalAssistOpen(!renewalAssistOpen);
+
+  };
 
   const handleNavbarSectionClose = (event) => {
     setDrawerOpen(false);
     setAgriPlannerOpen(false);
     setCropRecommendationOpen(false);
-
+    setComplaintOpen(false);
+    setRenewalAssistOpen(false);
   };
 
   const handleLogout = () => {
@@ -65,7 +80,7 @@ export default function Navbar() {
       <List>
 
         {/* Home Section */}
-        <Link to="/home-farmer" style={{ textDecoration: 'none', colorLink: 'inherit' }} onClick={handleNavbarSectionClose}>
+        <Link to="/home-farmer" style={{ textDecoration: 'none' }} onClick={handleNavbarSectionClose}>
           <ListItemButton>
             <HomeIcon style={{ opacity: "0.6", marginRight: "8px" }} />
             <ListItemText primary="Home" />
@@ -128,6 +143,31 @@ export default function Navbar() {
           </List>
         </Collapse>
 
+        {/* Flood Recovery and Renewal Assist Section */}
+        <ListItemButton onClick={handleRenewalAssistClick}>
+          <SafetyCheckIcon style={{ opacity: "0.6", marginRight: "8px" }} />
+          <ListItemText primary="Flood Recovery and Renewal Assist" />
+          <ExpandMoreIcon />
+        </ListItemButton>
+        <Collapse in={renewalAssistOpen} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+
+            <Link to="/pre-flood-checklist" style={{ textDecoration: 'none', color: 'inherit' }} onClick={handleNavbarSectionClose}>
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemText primary="Pre-Flood Recovery Checklist" />
+              </ListItemButton>
+            </Link>
+            <Link to="/post-flood-checklist" style={{ textDecoration: 'none', color: 'inherit' }} onClick={handleNavbarSectionClose}>
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemText primary="Post-Flood Recovery Checklist" />
+              </ListItemButton>
+            </Link>
+
+          </List>
+        </Collapse>
+
+        <Divider />
+
         <Divider />
 
         {/* feedback Section */}
@@ -137,6 +177,31 @@ export default function Navbar() {
             <ListItemText primary="Give Feedback" />
           </ListItemButton>
         </Link>
+
+        <Divider />
+
+        {/* Complaint Section */}
+        <ListItemButton onClick={handleComplaintClick}>
+          <ErrorOutlineIcon style={{ opacity: "0.6", marginRight: "8px" }} />
+          <ListItemText primary="Complaint" />
+          <ExpandMoreIcon />
+        </ListItemButton>
+        <Collapse in={complaintOpen} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+
+            <Link to="/complaint" style={{ textDecoration: 'none', color: 'inherit' }} onClick={handleNavbarSectionClose}>
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemText primary="Make Complaint" />
+              </ListItemButton>
+            </Link>
+            <Link to="/view-complaint" style={{ textDecoration: 'none', color: 'inherit' }} onClick={handleNavbarSectionClose}>
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemText primary="View Complaint" />
+              </ListItemButton>
+            </Link>
+
+          </List>
+        </Collapse>
 
         <Divider />
 
@@ -200,6 +265,8 @@ export default function Navbar() {
           // and crop recommendation 
           setDrawerOpen(false);
           setAgriPlannerOpen(false);
+          setComplaintOpen(false);
+          setRenewalAssistOpen(false);
         }}
       >
         {list()}

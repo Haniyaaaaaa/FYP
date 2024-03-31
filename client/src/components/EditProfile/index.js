@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Button } from '@mui/material';
+import { TextField } from '@mui/material';
 import styles from "./styles.module.css";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
@@ -7,6 +7,9 @@ import NavbarFarmer from '../NavbarFarmer';
 import NavbarAdmin from '../AdminPanel/NavbarAdmin';
 import NavbarNormalvictim from '../NavbarNormalvictim'
 import Footer from '../Footer';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+import { message, Modal } from "antd";
 
 const EditProfile = () => {
     const navigate = useNavigate();
@@ -29,6 +32,9 @@ const EditProfile = () => {
     const [msg2, setMsg2] = useState("");
     const [error2, setError2] = useState("");
     const [userRole, setUserRole] = useState('');
+
+    const [deleteAccount, setDeleteAccount] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const url = `http://localhost:5000/api/update-profile`;
 
@@ -122,9 +128,22 @@ const EditProfile = () => {
         }
     }
 
-    const handleSubmitDeleteAccount = async (event) => {
+    const handleSubmitDeleteAccount = (event) => {
         event.preventDefault();
 
+        Modal.confirm({
+            title: 'Are you sure you want to delete your account?',
+            onOk() {
+                handleDeleteAccount();
+            },
+            onCancel() {
+                message.info('Account deletion cancelled');
+            },
+        });
+
+    }
+
+    const handleDeleteAccount = async () => {
         try {
             const url = `http://localhost:5000/api/update-profile/delete`;
 
@@ -132,12 +151,17 @@ const EditProfile = () => {
 
             //request sent to server
             const { data } = await axios.post(url, { userToken, delPassword });
-
+            setDeleteAccount(true)
             setMsg2(data.message);
             setError2("");
-
-            // Redirect to the login page after clicking on logout button
-            navigate('/login');
+            // Show CircularProgress for 3 seconds
+            setIsLoading(true);
+            setTimeout(() => {
+                setIsLoading(false);
+                // Reset deleteAccount state and navigate to login page
+                setDeleteAccount(false);
+                navigate('/login');
+            }, 3000);
 
         } catch (error) {
             if (
@@ -149,9 +173,7 @@ const EditProfile = () => {
                 setMsg2("");
             }
         }
-
     }
-
 
     return (
         <React.Fragment>
@@ -210,12 +232,13 @@ const EditProfile = () => {
                         {error && <div className={styles.error_msg}>{error}</div>}
                         {msg && <div className={styles.success_msg}>{msg}</div>}
 
-                        <Button style={{
-                            backgroundColor: "#3bb19b", color: "white", marginLeft: "30px", border: "none", "outline": "none", padding: "10px 15px", borderRadius: "20px", width: "180px",
-                            fontWeight: "bold",
-                            fontSize: "14px",
+                        <button style={{
+                            backgroundColor: "#3bb19b", color: "white", border: "none", "outline": "none", borderRadius: "10px",
+                            fontSize: "16px",
                             cursor: "pointer",
-                        }} sx={{ mb: 4 }} type="submit">update details</Button>
+                            marginTop: '0.4rem',
+                            marginBottom: '2rem'
+                        }} className="btn btn-primary" type="submit">update details</button>
 
 
 
@@ -251,12 +274,13 @@ const EditProfile = () => {
                         {error1 && <div className={styles.error_msg}>{error1}</div>}
                         {msg1 && <div className={styles.success_msg}>{msg1}</div>}
 
-                        <Button style={{
-                            backgroundColor: "#3bb19b", color: "white", marginLeft: "30px", border: "none", "outline": "none", padding: "10px 15px", borderRadius: "20px", width: "180px",
-                            fontWeight: "bold",
-                            fontSize: "14px",
+                        <button style={{
+                            backgroundColor: "#3bb19b", color: "white", border: "none", "outline": "none", borderRadius: "10px",
+                            fontSize: "16px",
                             cursor: "pointer",
-                        }} sx={{ mb: 4 }} type="submit">update Password</Button>
+                            marginTop: '0.4rem',
+                            marginBottom: '2rem'
+                        }} className="btn btn-primary" type="submit">update Password</button>
 
                     </form>
                 </div>
@@ -279,15 +303,31 @@ const EditProfile = () => {
                         {error2 && <div className={styles.error_msg}>{error2}</div>}
                         {msg2 && <div className={styles.success_msg}>{msg2}</div>}
 
-                        <Button style={{
-                            backgroundColor: "#3bb19b", color: "white", marginLeft: "30px", border: "none", "outline": "none", padding: "10px 15px", borderRadius: "20px", width: "180px",
-                            fontWeight: "bold",
-                            fontSize: "14px",
+                        <button style={{
+                            backgroundColor: "#3bb19b", color: "white", border: "none", "outline": "none", borderRadius: "10px",
+                            fontSize: "16px",
                             cursor: "pointer",
-                        }} sx={{ mb: 4 }} type="submit">Delete account</Button>
+                            marginTop: '0.4rem',
+                            marginBottom: '2rem'
+                        }} className="btn btn-primary" type="submit">Delete account</button>
 
                     </form>
                 </div> : null}
+
+                {deleteAccount && isLoading && (
+                    <Box sx={{
+                        position: 'fixed',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}>
+                        <CircularProgress color="inherit" />
+                    </Box>
+                )}
+
                 <Footer />
             </div>
         </React.Fragment >

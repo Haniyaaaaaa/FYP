@@ -16,11 +16,12 @@ import ListItemText from '@mui/material/ListItemText';
 import { Link } from "react-router-dom";
 // import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import logo from "../../images/logo.png";
-import HomeIcon from '@mui/icons-material/Home';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import SummarizeIcon from '@mui/icons-material/Summarize';
 import FeedbackIcon from '@mui/icons-material/Feedback';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -50,11 +51,11 @@ export default function Navbar() {
     >
       <List>
 
-        {/* Home Section */}
-        <Link to="/home-admin" style={{ textDecoration: 'none', colorLink: 'inherit' }} onClick={handleNavbarSectionClose}>
+        {/* Dashboard */}
+        <Link to="/admin-dashboard" style={{ textDecoration: 'none', color: 'inherit' }} onClick={handleNavbarSectionClose}>
           <ListItemButton>
-            <HomeIcon style={{ opacity: "0.6", marginRight: "8px" }} />
-            <ListItemText primary="Home" />
+            <DashboardIcon style={{ opacity: "0.6", marginRight: "8px" }} />
+            <ListItemText primary="Dashboard" />
           </ListItemButton>
         </Link>
         <Divider />
@@ -84,6 +85,16 @@ export default function Navbar() {
           <ListItemButton>
             <FeedbackIcon style={{ opacity: "0.6", marginRight: "8px" }} />
             <ListItemText primary="User Feedback" />
+          </ListItemButton>
+        </Link>
+
+        <Divider />
+
+        {/* User complaint Section */}
+        <Link to="/user-complaints" style={{ textDecoration: 'none', color: 'inherit' }} onClick={handleNavbarSectionClose}>
+          <ListItemButton>
+            <ErrorOutlineIcon style={{ opacity: "0.6", marginRight: "8px" }} />
+            <ListItemText primary="User Complaint" />
           </ListItemButton>
         </Link>
 

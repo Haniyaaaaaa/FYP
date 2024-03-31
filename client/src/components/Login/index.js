@@ -47,7 +47,7 @@ const Login = () => {
       console.log(res.data.role);
 
       if (res.data.role === "power admin") {
-        navigate("/home-admin");
+        navigate("/admin-dashboard");
       } else if (res.data.role === "farmer") {
         navigate("/home-farmer");
       } else if (res.data.role === "normal victim") {

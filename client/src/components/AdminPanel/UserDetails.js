@@ -11,7 +11,6 @@ export default function UserDetails() {
     const [editedFirstName, setEditedFirstName] = useState(null);
     const [editedLastName, setEditedLastName] = useState(null);
     const [editedEmail, setEditedEmail] = useState(null);
-    const [editedRole, setEditedRole] = useState(null);
     const [record, setRecord] = useState(null);
     const [showEditModal, setShowEditModal] = useState(false);
 
@@ -121,11 +120,10 @@ export default function UserDetails() {
         setEditedFirstName(record.firstName);
         setEditedLastName(record.lastName);
         setEditedEmail(record.email);
-        setEditedRole(record.role);
     };
 
     const handleEditRecords = async () => {
-        if (!editedFirstName || !editedLastName || !editedEmail || !editedRole) {
+        if (!editedFirstName || !editedLastName || !editedEmail) {
             message.error("Please fill all the fields");
             return;
         }
@@ -134,7 +132,6 @@ export default function UserDetails() {
             firstName: editedFirstName,
             lastName: editedLastName,
             email: editedEmail,
-            role: editedRole,
         };
 
         const initialData = {
@@ -175,7 +172,7 @@ export default function UserDetails() {
 
 
     return (
-        <>
+        <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', overflowX: 'hidden' }}>
             <NavbarAdmin />
             <Typography.Title level={2} style={{ marginTop: '2rem', marginLeft: '12px' }}>User Details</Typography.Title>
             <Table columns={columns} dataSource={users} />
@@ -186,6 +183,7 @@ export default function UserDetails() {
                 okText="Save"
                 onOk={handleEditRecords}
                 onCancel={() => setShowEditModal(false)}
+                okButtonProps={{ style: { backgroundColor: '#3bb19b', color: 'white' } }}
             >
                 <Typography.Text>First Name:</Typography.Text>
                 <Input
@@ -211,19 +209,11 @@ export default function UserDetails() {
                     style={{ marginBottom: 15 }}
                 />
 
-                <Typography.Text>Role:</Typography.Text>
-                <Input
-                    value={editedRole}
-                    placeholder="Enter Role"
-                    onChange={(e) => setEditedRole(e.target.value)}
-                    style={{ marginBottom: 15 }}
-                />
             </Modal>
 
-            <div style={{ position: 'fixed', bottom: '0', width: '100%' }} >
-                <Footer />
-            </div>
-        </>
+            <div style={{ bottom: "0", width: "100%", marginTop: 'auto' }}><Footer /></div>
+
+        </div>
     );
 
 }

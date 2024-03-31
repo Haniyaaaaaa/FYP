@@ -80,17 +80,14 @@ export default function UserDetails() {
     ];
 
     return (
-        <>
+        <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', overflowX: 'hidden' }}>
             <NavbarAdmin />
             <Typography.Title level={2} style={{ marginTop: '2rem', marginLeft: '12px' }}>Prediction Report</Typography.Title>
             <Table columns={columns} dataSource={users} />
 
+            <div style={{ bottom: "0", width: "100%", marginTop: 'auto' }}><Footer /></div>
 
-
-            <div style={{ position: 'fixed', bottom: '0', width: '100%' }} >
-                <Footer />
-            </div>
-        </>
+        </div>
     );
 
 }

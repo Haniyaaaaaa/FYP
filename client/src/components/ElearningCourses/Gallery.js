@@ -14,7 +14,7 @@ export default function Gallery() {
 
             <h4 style={{ marginLeft: "11rem", marginTop: "40px", marginBottom: "-10px" }}>E-Learning Course</h4>
 
-            <div className="flex flex-row w-11/12 pt-2">
+            <div className="flex flex-row w-4/6 pt-2">
                 <Video
                     link={activeVid}
                     title={actTitle}
@@ -25,7 +25,7 @@ export default function Gallery() {
 						overflow-y-scroll flex flex-col 
 						mt-4 border-slate-100 
 						border-2 rounded-lg"
-                    style={{ height: "min(40vw)" }}
+                    style={{ height: "min(33vw)" }}
                 >
 
                     {arr.map((e, index) => {

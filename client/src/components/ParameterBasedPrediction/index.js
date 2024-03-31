@@ -2,9 +2,10 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import NavbarFarmer from '../NavbarFarmer'
 import Header from '../Header'
-import { TextField, Button } from '@mui/material';
+import { TextField } from '@mui/material';
 import styles from "./styles.module.css";
 import Footer from '../Footer';
+import { message } from "antd";
 
 export default function Index() {
 
@@ -23,31 +24,31 @@ export default function Index() {
 
   const validateParameters = () => {
     if (nitrogen < 0 || nitrogen > 145) {
-      alert("Nitrogen value must be between 0 and 145.");
+      message.warning("Nitrogen value must be between 0 and 145.");
       return false;
     }
     if (phosphorus < 0 || phosphorus > 150) {
-      alert("Phosphorus value must be between 0 and 150.");
+      message.warning("Phosphorus value must be between 0 and 150.");
       return false;
     }
     if (potassium < 0 || potassium > 210) {
-      alert("Potassium value must be between 0 and 210.");
+      message.warning("Potassium value must be between 0 and 210.");
       return false;
     }
     if (humidity < 0 || humidity > 100) {
-      alert("Humidity must be between 0% and 100%.");
+      message.warning("Humidity must be between 0% and 100%.");
       return false;
     }
     if (temperature < 0 || temperature > 48) {
-      alert("Temperature must be between 0°C and 48°C.");
+      message.warning("Temperature must be between 0°C and 48°C.");
       return false;
     }
     if (rainfall < 0 || rainfall > 303) {
-      alert("Rainfall must be between 0mm and 303mm.");
+      message.warning("Rainfall must be between 0mm and 303mm.");
       return false;
     }
     if (ph < 0 || ph > 14) {
-      alert("pH value must be between 0 and 14.");
+      message.warning("pH value must be between 0 and 14.");
       return false;
     }
     return true;
@@ -240,13 +241,19 @@ export default function Index() {
               required
             />
             <div className={styles.btn}>
-              <Button style={{
-                backgroundColor: "#3bb19b", color: "white", marginLeft: "30px", border: "none", "outline": "none", padding: "10px 15px", borderRadius: "25px", width: "14rem", height: '4rem',
-                fontWeight: "bold",
+
+              <button style={{
+                backgroundColor: "#3bb19b", color: "white", marginLeft: "30px", border: "none", "outline": "none", padding: "10px 15px", borderRadius: "10px",
                 fontSize: "16px",
                 cursor: "pointer",
-                alignItems: 'center'
-              }} sx={{ mb: 4 }} type="submit">Get Recommendation</Button>
+                alignItems: 'center',
+                marginTop: '1rem',
+                marginBottom: '2rem'
+              }}
+                className="btn btn-primary"
+                type="submit"
+              >Get Recommendation</button>
+
             </div>
 
           </form>

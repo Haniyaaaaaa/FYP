@@ -2,16 +2,52 @@ import React, { useState } from 'react'
 import Gallery from './Gallery'
 import NavbarNormalvictim from '../NavbarNormalvictim'
 import Footer from '../Footer'
-import { Button } from '@mui/material';
 import axios from "axios";
-import Alert from '@mui/material/Alert';
+import PropTypes from 'prop-types';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import { message } from "antd";
+
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`vertical-tabpanel-${index}`}
+            aria-labelledby={`vertical-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box sx={{ p: 3 }}>
+                    <Typography>{children}</Typography>
+                </Box>
+            )}
+        </div>
+    );
+}
+
+TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+    return {
+        id: `vertical-tab-${index}`,
+        'aria-controls': `vertical-tabpanel-${index}`,
+    };
+}
 
 export default function ElearningCourses() {
 
     const [notes, setNotes] = useState('')
-    const [showSuccessAlert, setShowSuccessAlert] = useState(false);
     const [savedNotes, setSavedNotes] = useState([]);
-    const [showInfoAlert, setShowInfoAlert] = useState(false);
+    const [value, setValue] = React.useState(0);
 
     const handleSaveNotes = async () => {
         const url = `http://localhost:5000/api/notes/save`;
@@ -20,8 +56,7 @@ export default function ElearningCourses() {
 
         // Check if notes is empty or contains only whitespace
         if (!notes.trim()) {
-            // Show an alert to the user
-            alert("Notes cannot be empty");
+            message.warning('Notes cannot be empty')
             return;
         }
 
@@ -29,8 +64,7 @@ export default function ElearningCourses() {
             const { data } = await axios.post(url, { userId: userToken, notes });
 
             if (data.message === 'Notes saved successfully') {
-                // Show success alert
-                setShowSuccessAlert(true);
+                message.success('Notes saved successfully!');
                 setNotes("");
             }
         } catch (error) {
@@ -58,7 +92,7 @@ export default function ElearningCourses() {
         } catch (error) {
             // If the status is 404(no notes), show message to user
             console.error("Error fetching notes:", error);
-            setShowInfoAlert(true);
+            message.error("You haven't added any notes yet")
             setSavedNotes([]); // Clear savedNotes state
         }
     };
@@ -69,8 +103,17 @@ export default function ElearningCourses() {
         setNotes(event.target.value);
     };
 
+    const handleTabChange = (event, newValue) => {
+        setValue(newValue);
+
+        // If the user clicks on the "View Saved Notes" tab, fetch saved notes
+        if (newValue === 2) {
+            handleViewSavedNotes();
+        }
+    };
+
     return (
-        <div>
+        <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
             <NavbarNormalvictim />
             {/* black div */}
             <div
@@ -83,7 +126,7 @@ export default function ElearningCourses() {
                 }}
             >
                 {/* Heading */}
-                <h1 style={{ color: 'rgba(59, 177, 155, 1)', marginLeft: '30px', marginTop: '10px', fontSize: '55px' }}>E-LEARNING RESOURCES ON FLOOD PREPAREDNESS</h1>
+                <h1 style={{ color: 'rgba(59, 177, 155, 1)', marginLeft: '30px', marginTop: '10px', fontSize: '55px' }}>E-LEARNING COURSE ON FLOOD PREPAREDNESS</h1>
 
                 {/* Description */}
                 <div style={{ marginLeft: '30px', marginTop: '20px' }}>
@@ -96,71 +139,76 @@ export default function ElearningCourses() {
                 </div>
 
             </div>
-            <Gallery />
 
-            {/* notes */}
-            <div style={{ marginBottom: '3rem' }}>
-
-                <h4 style={{ marginLeft: "11rem", marginTop: "40px", marginBottom: "10px" }}>Take Notes</h4>
-                <div class="form-outline" data-mdb-input-init style={{ border: "1px solid #ced4da", width: '105vh', height: '25vh', marginLeft: "11rem", marginBottom: "1rem" }}>
-                    <textarea class="form-control" id="textAreaExample" rows="4" value={notes} onChange={handleNotesChange} placeholder='Enter notes'></textarea>
+            <div style={{ display: 'flex', overflowX: 'hidden' }}>
+                <div style={{ marginTop: '6rem' }}>
+                    <Tabs
+                        orientation="vertical"
+                        variant="scrollable"
+                        value={value}
+                        onChange={handleTabChange}
+                        aria-label="Vertical tabs example"
+                        sx={{ width: '170px', borderRight: 1, borderColor: 'divider' }}
+                    >
+                        <Tab label="Gallery" {...a11yProps(0)} />
+                        <Tab label="Take Notes" {...a11yProps(1)} />
+                        <Tab label="View Saved Notes" {...a11yProps(2)} />
+                    </Tabs>
                 </div>
 
-                {/* success alert */}
-                {showSuccessAlert && (
-                    <Alert
-                        severity="success"
-                        onClose={() => setShowSuccessAlert(false)}
-                        style={{ margin: '10px 10px' }}
-                    >
-                        Notes saved successfully!
-                    </Alert>
-                )}
+                <div>
+                    {/* Tab Panels */}
+                    <TabPanel value={value} index={0}>
+                        <Gallery />
+                    </TabPanel>
 
-                {/* No notes found alert */}
-                {showInfoAlert && (
-                    <Alert
-                        severity="info"
-                        onClose={() => setShowInfoAlert(false)}
-                        style={{ margin: '10px 10px' }}
-                    >
-                        You haven't added any notes yet!
-                    </Alert>
-                )}
+                    <TabPanel value={value} index={1}>
+                        <div style={{ marginBottom: '3rem' }}>
 
-                <div style={{ marginLeft: "25rem" }}>
-                    <Button style={{
-                        backgroundColor: "#3bb19b", color: "white", border: "none", "outline": "none", paddingTop: "10px", paddingBottom: '10px', borderRadius: "30px", width: "140px",
-                        fontWeight: "bold",
-                        fontSize: "15px",
-                        cursor: "pointer",
-                    }}
-                        onClick={handleSaveNotes}>Save Notes</Button>
+                            <h4 style={{ marginLeft: "11rem", marginTop: "40px", marginBottom: "10px" }}>Take Notes</h4>
+                            <div class="form-outline" data-mdb-input-init style={{ border: "1px solid #ced4da", width: '105vh', height: '25vh', marginLeft: "11rem", marginBottom: "1rem" }}>
+                                <textarea class="form-control" id="textAreaExample" rows="4" value={notes} onChange={handleNotesChange} placeholder='Enter notes'></textarea>
+                            </div>
 
-                    <Button style={{
-                        backgroundColor: "#3bb19b", color: "white", border: "none", "outline": "none", paddingTop: "10px", paddingBottom: '10px', borderRadius: "30px", width: "190px", marginLeft: '10px',
-                        fontWeight: "bold",
-                        fontSize: "15px",
-                        cursor: "pointer",
-                    }}
-                        onClick={handleViewSavedNotes}>View Saved Notes</Button>
+                            <div style={{ marginLeft: "25rem" }}>
+                                <button style={{
+                                    backgroundColor: "#3bb19b", color: "white", border: "none", "outline": "none", paddingTop: "10px", paddingBottom: '10px', borderRadius: "10px",
+                                    fontSize: "16px",
+                                    cursor: "pointer",
+                                    marginTop: '0.5rem',
+                                }} className="btn btn-primary"
+                                    onClick={handleSaveNotes}>Save Notes</button>
 
+                            </div>
+
+
+
+
+                        </div>
+                    </TabPanel>
+
+                    <TabPanel value={value} index={2}>
+                        {/* View Saved Notes Component */}
+                        <div style={{ marginBottom: '3rem' }}>
+
+                            {savedNotes.length > 0 && (
+                                <div style={{ marginLeft: "11rem", marginTop: "40px", marginBottom: "10px" }}>
+                                    <h4>Your Notes</h4>
+                                    <ul style={{ listStyleType: 'disc' }}>
+                                        {savedNotes.map((note, index) => (
+                                            <li key={index}>{note}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+
+                        </div>
+                    </TabPanel>
                 </div>
-
-                {savedNotes.length > 0 && (
-                    <div style={{ marginLeft: "11rem", marginTop: "40px", marginBottom: "10px" }}>
-                        <h4>Your Notes</h4>
-                        <ul style={{ listStyleType: 'disc' }}>
-                            {savedNotes.map((note, index) => (
-                                <li key={index}>{note}</li>
-                            ))}
-                        </ul>
-                    </div>
-                )}
-
             </div>
 
-            <Footer />
+            <div style={{ bottom: "0", width: "100%", marginTop: 'auto' }}><Footer /></div>
+
         </div>
     )
 }

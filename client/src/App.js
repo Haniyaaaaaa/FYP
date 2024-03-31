@@ -38,7 +38,13 @@ import ThreeDModels from "./components/3dModels";
 import ModelView from "./components/3dModels/ModelView";
 import PredictionReport from "./components/AdminPanel/PredictionReport";
 import Feedback from "./components/Feedback/index";
+import Complaint from "./components/Complaint/MakeComplaint";
 import UserFeedback from "./components/AdminPanel/UserFeedback";
+import UserComplaints from "./components/AdminPanel/UserComplaints";
+import AdminDashboard from "./components/AdminPanel/AdminDashboard";
+import ViewComplaint from "./components/Complaint/ViewComplaint";
+import PreFloodChecklist from "./components/RecoveryAndRenewalAssist/PreFloodChecklist";
+import PostFloodChecklist from "./components/RecoveryAndRenewalAssist/PostFloodChecklist";
 
 function App() {
   // const userToken = localStorage.getItem("token");
@@ -221,6 +227,25 @@ function App() {
         {userToken && <Route path="/feedback" element={<Feedback />} />}
         {userToken && (
           <Route path="/user-feedbacks" element={<UserFeedback />} />
+        )}
+        {userToken && <Route path="/complaint" element={<Complaint />} />}
+        {userToken && (
+          <Route path="/view-complaint" element={<ViewComplaint />} />
+        )}
+        {userToken && (
+          <Route path="/user-complaints" element={<UserComplaints />} />
+        )}
+        {userToken && (
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        )}
+        {userToken && (
+          <Route path="/pre-flood-checklist" element={<PreFloodChecklist />} />
+        )}
+        {userToken && (
+          <Route
+            path="/post-flood-checklist"
+            element={<PostFloodChecklist />}
+          />
         )}
 
         <Route path="/signup" exact element={<Signup />} />
