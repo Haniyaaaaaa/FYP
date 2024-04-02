@@ -50,6 +50,7 @@ router.get('/getChecklist/:userId', async (req, res) => {
         const checklistTasks = await ChecklistModel.findOne({
             userId
         });
+        console.log(checklistTasks)
 
         if (!checklistTasks) {
             return res.status(404).json({
@@ -60,9 +61,9 @@ router.get('/getChecklist/:userId', async (req, res) => {
         // Extract task names and IDs
         const tasks = checklistTasks.items.map(item => ({
             id: item._id, // Include task ID
-            task: item.task
+            task: item.task,
+            status: item.completed
         }));
-
         res.status(200).json(tasks);
 
     } catch (error) {
@@ -103,6 +104,38 @@ router.put("/updateTask/:taskId", async (req, res) => {
         console.error(error);
         res.status(500).json({
             error: 'Error updating task'
+        });
+    }
+});
+
+// New endpoint to update task status
+router.put("/updateStatus", async (req, res) => {
+    try {
+        const {
+            taskIds,
+            status,
+            userId
+        } = req.body;
+
+        // Update the status of tasks
+        await ChecklistModel.updateMany({
+            userId,
+            "items._id": {
+                $in: taskIds
+            }
+        }, {
+            $set: {
+                "items.$.completed": status
+            }
+        });
+
+        res.status(200).json({
+            message: 'Task status updated successfully'
+        });
+    } catch (error) {
+        console.error('Error updating task status:', error);
+        res.status(500).json({
+            message: 'Internal Server Error'
         });
     }
 });

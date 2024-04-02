@@ -8,6 +8,7 @@ import {
     Tooltip,
     Typography,
     message,
+    Tag,
 } from "antd";
 import NavbarFarmer from "../NavbarFarmer";
 import NavbarNormalvictim from "../NavbarNormalvictim";
@@ -22,13 +23,13 @@ export default function PreFloodChecklist() {
     const [editedTask, setEditedTask] = useState(""); //individual task to be displayed in the table
     const [record, setRecord] = useState(null);
     const [showEditModal, setShowEditModal] = useState(false);
-
     const [taskInput, setTaskInput] = useState(""); //stores task entered in the textfield
+    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
     useEffect(() => {
         fetchChecklist();
     }, []);
-    // Fetch verified users when the component mounts
+
     const fetchChecklist = async () => {
         try {
             const userToken = localStorage.getItem("token");
@@ -37,7 +38,6 @@ export default function PreFloodChecklist() {
 
             const url = `http://localhost:5000/api/checklist/getChecklist/${userToken}`;
             const response = await axios.get(url);
-
             console.log(response.data);
             setChecklist(response.data);
         } catch (error) {
@@ -86,10 +86,21 @@ export default function PreFloodChecklist() {
             render: (_, record) => {
                 return record.task;
             },
-            width: "70%",
+            width: "35%",
         },
         {
             key: 2,
+            title: "Completed",
+            render: (_, record) => (
+                <Tag color={record.status ? "green" : "red"} style={{ fontSize: 14 }}>
+                    {record.status ? "Yes" : "No"}
+                </Tag>
+            ),
+            width: "35%",
+        },
+
+        {
+            key: 3,
             title: "Actions",
             render: (record) => {
                 return (
@@ -132,8 +143,6 @@ export default function PreFloodChecklist() {
 
         const data = {
             task: editedTask,
-            // tasks is the name of the column on table
-            //editedTask is the edited task that will be set equal to the tasks after editing
         };
 
         const initialData = {
@@ -209,6 +218,38 @@ export default function PreFloodChecklist() {
         });
     };
 
+    const handleStatusChange = async () => {
+        if (selectedRowKeys.length === 0) {
+            message.warning("Please select tasks to update status.");
+            return;
+        }
+
+        try {
+            const userToken = localStorage.getItem("token");
+            const url = `http://localhost:5000/api/checklist/updateStatus`;
+
+            const response = await axios.put(url, {
+                taskIds: selectedRowKeys,
+                status: true,
+                userId: userToken,
+            });
+
+            if (response.status === 200) {
+                message.success("Selected tasks status updated successfully");
+                // Refresh the checklist after status update
+                fetchChecklist();
+                setSelectedRowKeys([]);
+            }
+        } catch (error) {
+            console.error("Error updating tasks status:", error);
+            message.error("Failed to update tasks status");
+        }
+    };
+
+    const onSelectChange = (selectedRowKeys) => {
+        setSelectedRowKeys(selectedRowKeys);
+    };
+
     return (
         <div
             style={{
@@ -217,7 +258,6 @@ export default function PreFloodChecklist() {
                 minHeight: "100vh",
             }}
         >
-            {" "}
             {userRole === "farmer" ? <NavbarFarmer /> : <NavbarNormalvictim />}
             <div
                 style={{
@@ -235,9 +275,8 @@ export default function PreFloodChecklist() {
                         fontSize: "55px",
                     }}
                 >
-                    {" "}
-                    Pre - Flood Recovery Checklist{" "}
-                </h1>{" "}
+                    Pre - Flood Recovery Checklist
+                </h1>
                 <div
                     style={{
                         marginLeft: "30px",
@@ -252,9 +291,9 @@ export default function PreFloodChecklist() {
                         Prepare for floods with our Pre - Flood Checklist Interface.Stay
                         ahead of potential risks, secure your assets, and ensure safety with
                         proactive measures.Let 's tackle challenges together for a safer
-                        future.{" "}
-                    </p>{" "}
-                </div>{" "}
+                        future.
+                    </p>
+                </div>
             </div>
             <div
                 style={{
@@ -288,9 +327,21 @@ export default function PreFloodChecklist() {
                         }}
                         onClick={handleAddTask}
                     >
-                        ADD{" "}
+                        ADD
                     </Button>
                 </Space.Compact>
+
+                {/* Button to update task status */}
+                <Button style={{
+                    backgroundColor: "#3bb19b",
+                    color: "white",
+                    height: "40px",
+                    fontSize: "16px",
+                    marginBottom: '1rem'
+                }}
+                    onClick={handleStatusChange}>
+                    Update Selected Tasks Status
+                </Button>
 
                 {/* table for checklist */}
 
@@ -302,8 +353,17 @@ export default function PreFloodChecklist() {
                     <Table
                         columns={columns}
                         dataSource={checklist}
-                        pagination={{ pageSize: 5 }}
-                    />{" "}
+                        pagination={{ pageSize: 7 }}
+                        rowKey="id"
+                        rowSelection={{
+                            type: "checkbox",
+                            selectedRowKeys,
+                            onChange: onSelectChange,
+                            getCheckboxProps: (record) => ({
+                                disabled: record.status === true,
+                            }),
+                        }}
+                    />
                 </div>
 
                 <Modal
@@ -332,8 +392,7 @@ export default function PreFloodChecklist() {
                     marginTop: "auto",
                 }}
             >
-                {" "}
-                <Footer />{" "}
+                <Footer />
             </div>
         </div>
     );

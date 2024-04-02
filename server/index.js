@@ -15,7 +15,7 @@ const feedbackRoutes = require("./routes/feedback.js");
 const complaintRoutes = require("./routes/complaint.js");
 const dashboardRoutes = require("./routes/dashboard.js");
 const prefloodchecklistRoutes = require("./routes/prefloodChecklist.js");
-// const postfloodchecklistRoutes = require("./routes/postfloodChecklist.js");
+const postfloodchecklistRoutes = require("./routes/postfloodChecklist.js");
 
 // database connection
 connection();
@@ -36,7 +36,7 @@ app.use("/api/feedback", feedbackRoutes);
 app.use("/api/complaint", complaintRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/checklist", prefloodchecklistRoutes);
-// app.use("/api/checklist", postfloodchecklistRoutes);
+app.use("/api/checklistt", postfloodchecklistRoutes);
 
 const port = process.env.PORT || 5000;
 app.listen(port, console.log(`Listening on port ${port}...`));
