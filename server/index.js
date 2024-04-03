@@ -15,6 +15,8 @@ const feedbackRoutes = require("./routes/feedback.js");
 const complaintRoutes = require("./routes/complaint.js");
 const dashboardRoutes = require("./routes/dashboard.js");
 const checklistRoutes = require("./routes/checklist.js");
+const modelVideo = require("./routes/video.js");
+const postRoutes = require("./routes/posts.js");
 
 // database connection
 connection();
@@ -25,6 +27,7 @@ app.use(cors());
 
 // routes
 app.use("/api/users", userRoutes);
+app.use("/api/posts", postRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/password-reset", passwordResetRoutes);
 app.use("/api/update-profile", updateProfileRoutes);
@@ -35,8 +38,6 @@ app.use("/api/feedback", feedbackRoutes);
 app.use("/api/complaint", complaintRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/checklist", checklistRoutes);
-
+app.use("/api/videos", modelVideo);
 const port = process.env.PORT || 5000;
 app.listen(port, console.log(`Listening on port ${port}...`));
-
-

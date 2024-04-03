@@ -45,6 +45,9 @@ import AdminDashboard from "./components/AdminPanel/AdminDashboard";
 import ViewComplaint from "./components/Complaint/ViewComplaint";
 import PreFloodChecklist from "./components/RecoveryAndRenewalAssist/PreFloodChecklist";
 import PostFloodChecklist from "./components/RecoveryAndRenewalAssist/PostFloodChecklist";
+import Edit3dModels from "./components/AdminPanel/Edit3dModel";
+import EditModelVideos from "./components/AdminPanel/EditModelVideos";
+import FloodConnect from "./components/FloodConnect/homePage";
 
 function App() {
   // const userToken = localStorage.getItem("token");
@@ -132,6 +135,7 @@ function App() {
         {userToken && userRole === "power admin" && (
           <Route path="/" exact element={<HomeAdmin />} />
         )}
+        <Route path="/" exact element={<HomeAdmin />} />
         {userToken && userRole === "normal victim" && (
           <Route path="/" exact element={<HomeNormalvictim />} />
         )}
@@ -156,6 +160,11 @@ function App() {
             exact
             element={<HomeNormalvictim />}
           />
+        ) : (
+          <Route path="/home-normalvictim" exact element={<ErrorScreen />} />
+        )}
+        {userToken && userRole === "normal victim" ? (
+          <Route path="/home-flood-connect" exact element={<FloodConnect />} />
         ) : (
           <Route path="/home-normalvictim" exact element={<ErrorScreen />} />
         )}
@@ -225,6 +234,12 @@ function App() {
           <Route path="/prediction-report" element={<PredictionReport />} />
         )}
         {userToken && <Route path="/feedback" element={<Feedback />} />}
+        {userToken && (
+          <Route path="/edit-3d-models" element={<Edit3dModels />} />
+        )}
+        {userToken && (
+          <Route path="/edit-model-videos" element={<EditModelVideos />} />
+        )}
         {userToken && (
           <Route path="/user-feedbacks" element={<UserFeedback />} />
         )}

@@ -14,15 +14,15 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { Link } from "react-router-dom";
 import logo from "../images/logo.png";
-import HomeIcon from '@mui/icons-material/Home';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
-import Collapse from '@mui/material/Collapse';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import CampaignIcon from '@mui/icons-material/Campaign';
+import HomeIcon from "@mui/icons-material/Home";
+import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
+import Collapse from "@mui/material/Collapse";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import CampaignIcon from "@mui/icons-material/Campaign";
 import ViewInArIcon from "@mui/icons-material/ViewInAr";
-import RateReviewIcon from '@mui/icons-material/RateReview';
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import SafetyCheckIcon from '@mui/icons-material/SafetyCheck';
+import RateReviewIcon from "@mui/icons-material/RateReview";
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+import SafetyCheckIcon from "@mui/icons-material/SafetyCheck";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -44,23 +44,18 @@ export default function Navbar() {
   const handleComplaintClick = (event) => {
     event.stopPropagation();
     setComplaintOpen(!complaintOpen);
-
   };
 
   const handleRenewalAssistClick = (event) => {
     event.stopPropagation();
     setRenewalAssistOpen(!renewalAssistOpen);
-
   };
-  
-
 
   const handleNavbarSectionClose = (event) => {
     setDrawerOpen(false);
     setAwarnessCampaignOpen(false);
     setComplaintOpen(false);
     setRenewalAssistOpen(false);
-
   };
 
   const handleLogout = () => {
@@ -92,7 +87,16 @@ export default function Navbar() {
         </Link>
 
         <Divider />
-
+        {/* Flood connect */}
+        <Link
+          to="/home-flood-connect"
+          style={{ textDecoration: "none", color: "inherit" }}
+          onClick={handleNavbarSectionClose}
+        >
+          <ListItemButton>
+            <ListItemText primary="Flood Connect" />
+          </ListItemButton>
+        </Link>
         {/* Flood Awarness Campaign */}
         <ListItemButton onClick={handleAwarnessCampaignClick}>
           <CampaignIcon style={{ opacity: "0.6", marginRight: "8px" }} />
@@ -187,7 +191,7 @@ export default function Navbar() {
             </Link>
           </List>
         </Collapse>
-     <Divider />
+        <Divider />
 
         {/* Flood Recovery and Renewal Assist Section */}
         <ListItemButton onClick={handleRenewalAssistClick}>
@@ -197,44 +201,56 @@ export default function Navbar() {
         </ListItemButton>
         <Collapse in={renewalAssistOpen} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-
-            <Link to="/pre-flood-checklist" style={{ textDecoration: 'none', color: 'inherit' }} onClick={handleNavbarSectionClose}>
+            <Link
+              to="/pre-flood-checklist"
+              style={{ textDecoration: "none", color: "inherit" }}
+              onClick={handleNavbarSectionClose}
+            >
               <ListItemButton sx={{ pl: 4 }}>
                 <ListItemText primary="Pre-Flood Recovery Checklist" />
               </ListItemButton>
             </Link>
-            <Link to="/post-flood-checklist" style={{ textDecoration: 'none', color: 'inherit' }} onClick={handleNavbarSectionClose}>
+            <Link
+              to="/post-flood-checklist"
+              style={{ textDecoration: "none", color: "inherit" }}
+              onClick={handleNavbarSectionClose}
+            >
               <ListItemButton sx={{ pl: 4 }}>
                 <ListItemText primary="Post-Flood Recovery Checklist" />
               </ListItemButton>
             </Link>
-
           </List>
         </Collapse>
         <Divider />
 
-{/* Flood Recovery and Renewal Assist Section */}
-<ListItemButton onClick={handleRenewalAssistClick}>
-  <SafetyCheckIcon style={{ opacity: "0.6", marginRight: "8px" }} />
-  <ListItemText primary="Flood Recovery and Renewal Assist" />
-  <ExpandMoreIcon />
-</ListItemButton>
-<Collapse in={renewalAssistOpen} timeout="auto" unmountOnExit>
-  <List component="div" disablePadding>
-
-    <Link to="/pre-flood-checklist" style={{ textDecoration: 'none', color: 'inherit' }} onClick={handleNavbarSectionClose}>
-      <ListItemButton sx={{ pl: 4 }}>
-        <ListItemText primary="Pre-Flood Recovery Checklist" />
-      </ListItemButton>
-    </Link>
-    <Link to="/post-flood-checklist" style={{ textDecoration: 'none', color: 'inherit' }} onClick={handleNavbarSectionClose}>
-      <ListItemButton sx={{ pl: 4 }}>
-        <ListItemText primary="Post-Flood Recovery Checklist" />
-      </ListItemButton>
-    </Link>
-
-  </List>
-</Collapse>
+        {/* Flood Recovery and Renewal Assist Section */}
+        <ListItemButton onClick={handleRenewalAssistClick}>
+          <SafetyCheckIcon style={{ opacity: "0.6", marginRight: "8px" }} />
+          <ListItemText primary="Flood Recovery and Renewal Assist" />
+          <ExpandMoreIcon />
+        </ListItemButton>
+        <Collapse in={renewalAssistOpen} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <Link
+              to="/pre-flood-checklist"
+              style={{ textDecoration: "none", color: "inherit" }}
+              onClick={handleNavbarSectionClose}
+            >
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemText primary="Pre-Flood Recovery Checklist" />
+              </ListItemButton>
+            </Link>
+            <Link
+              to="/post-flood-checklist"
+              style={{ textDecoration: "none", color: "inherit" }}
+              onClick={handleNavbarSectionClose}
+            >
+              <ListItemButton sx={{ pl: 4 }}>
+                <ListItemText primary="Post-Flood Recovery Checklist" />
+              </ListItemButton>
+            </Link>
+          </List>
+        </Collapse>
         <Divider />
 
         {/* feedback Section */}
@@ -249,7 +265,6 @@ export default function Navbar() {
           </ListItemButton>
         </Link>
 
-
         <Divider />
 
         {/* Complaint Section */}
@@ -260,18 +275,24 @@ export default function Navbar() {
         </ListItemButton>
         <Collapse in={complaintOpen} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-
-            <Link to="/complaint" style={{ textDecoration: 'none', color: 'inherit' }} onClick={handleNavbarSectionClose}>
+            <Link
+              to="/complaint"
+              style={{ textDecoration: "none", color: "inherit" }}
+              onClick={handleNavbarSectionClose}
+            >
               <ListItemButton sx={{ pl: 4 }}>
                 <ListItemText primary="Make Complaint" />
               </ListItemButton>
             </Link>
-            <Link to="/view-complaint" style={{ textDecoration: 'none', color: 'inherit' }} onClick={handleNavbarSectionClose}>
+            <Link
+              to="/view-complaint"
+              style={{ textDecoration: "none", color: "inherit" }}
+              onClick={handleNavbarSectionClose}
+            >
               <ListItemButton sx={{ pl: 4 }}>
                 <ListItemText primary="View Complaint" />
               </ListItemButton>
             </Link>
-
           </List>
         </Collapse>
 

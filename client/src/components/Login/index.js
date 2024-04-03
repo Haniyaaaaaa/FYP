@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles.module.css";
+import { useDispatch } from "react-redux";
+import { setLogin } from "../FloodConnect/state";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -10,6 +12,8 @@ const Login = () => {
     password: "",
     role: "normal victim",
   });
+
+  const dispatch = useDispatch();
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
@@ -35,10 +39,6 @@ const Login = () => {
 
       const { data: res } = await axios.post(url, data);
 
-      // userId is set in localStorage of browser
-      // {token:userId}
-      //token field contains userId
-
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("role", res.data.role);
       window.dispatchEvent(new Event("storageChange"));
@@ -51,6 +51,28 @@ const Login = () => {
       } else if (res.data.role === "farmer") {
         navigate("/home-farmer");
       } else if (res.data.role === "normal victim") {
+        const fetchUserDetails = async (token) => {
+          try {
+            const url = `http://localhost:5000/api/users/get-users/${token}`;
+
+            const { data } = await axios.get(url);
+            return data;
+          } catch (error) {
+            console.error(error);
+            throw new Error("Failed to fetch user details");
+          }
+        };
+        const userDetails = await fetchUserDetails(res.data.token);
+        dispatch(
+          setLogin({
+            uid: userDetails._id,
+            firstName: userDetails.firstName,
+            email: userDetails.email,
+            role: userDetails.role,
+            friends: userDetails.friends,
+          })
+        );
+
         navigate("/home-normalvictim");
       }
     } catch (error) {
