@@ -9,12 +9,15 @@ export default function Gallery() {
   const [actTitle, setActTitle] = useState(
     "The Great Flood: Investigating One of History's Greatest Myths | Full Documentary"
   );
+  const [description, setDescription] = useState(
+    "The Great Flood: Investigating One of History's Greatest Myths | Full Documentary"
+  );
 
   const arr = embeddedData;
   return (
     <div>
       <div className="flex flex-row w-10/12 pt-2">
-        <Video link={activeVid} title={actTitle} />
+        <Video link={activeVid} title={actTitle} description={description} />
         <div
           className="w-3/6 shadow-lg shadow-gray-300 
 						overflow-y-scroll flex flex-col 
@@ -32,6 +35,7 @@ export default function Gallery() {
                 onClick={() => {
                   setActiveVid(e.link);
                   setActTitle(e.videoTitle);
+                  setDescription(e.videoDescription);
                 }}
               >
                 <img

@@ -14,10 +14,16 @@ export default function Video(props) {
           className="w-full h-5/6"
         ></iframe>
         <div
-          className="mt-1 h-1/3 text-left text-xl text-slate-600"
+          className="mt-1 text-left text-xl text-slate-600"
           style={{ marginLeft: "15px", paddingTop: "1rem" }}
         >
           {props.title}
+        </div>
+        <div
+          className="mt-1 text-left text-slate-600"
+          style={{ marginLeft: "10px", paddingTop: "1rem", fontSize: "12px" }}
+        >
+          {props.description}
         </div>
       </div>
     </div>
