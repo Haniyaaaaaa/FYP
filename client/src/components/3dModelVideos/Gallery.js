@@ -31,20 +31,20 @@ export default function Gallery() {
 									shadow-xl shadow-gray-300"
                 onClick={() => {
                   setActiveVid(e.link);
-                  setActTitle(e.title);
+                  setActTitle(e.videoTitle);
                 }}
               >
                 <img
                   className="w-1/2 h-20 my-4 
 										mx-2 float-left"
-                  src={e.img}
+                  src={"/assets/image.png"}
                   alt="img"
                 />
                 <p
                   className="ml-2 font-semibold 
 										pt-6 pl-8 text-sm"
                 >
-                  {e.title}
+                  {e.videoTitle}
                 </p>
               </div>
             );

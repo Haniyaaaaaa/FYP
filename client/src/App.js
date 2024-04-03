@@ -48,6 +48,7 @@ import PostFloodChecklist from "./components/RecoveryAndRenewalAssist/PostFloodC
 import Edit3dModels from "./components/AdminPanel/Edit3dModel";
 import EditModelVideos from "./components/AdminPanel/EditModelVideos";
 import FloodConnect from "./components/FloodConnect/homePage";
+import ProfilePage from "./components/FloodConnect/profilePage";
 
 function App() {
   // const userToken = localStorage.getItem("token");
@@ -167,6 +168,9 @@ function App() {
           <Route path="/home-flood-connect" exact element={<FloodConnect />} />
         ) : (
           <Route path="/home-normalvictim" exact element={<ErrorScreen />} />
+        )}
+        {userToken && (
+          <Route path="/profile/:userId" element={<ProfilePage />} />
         )}
         {userToken && <Route path="/edit-profile" element={<EditProfile />} />}
         {userToken && <Route path="/3d-Models" element={<ThreeDModels />} />}

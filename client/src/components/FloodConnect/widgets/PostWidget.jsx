@@ -14,6 +14,7 @@ import {
   TextField,
   Menu,
   MenuItem,
+  colors,
 } from "@mui/material";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FlexBetween from "../components/FlexBetween";
@@ -27,12 +28,9 @@ const PostWidget = ({
   postId,
   postUserId,
   name,
-  description,
-  location,
-  picturePath,
-  userPicturePath,
   likes,
   comments,
+  description
 
 }) => {
 
@@ -80,13 +78,13 @@ const PostWidget = ({
 
 
   const token = useSelector((state) => state.token);
-  const loggedInUserId = useSelector((state) => state.user._id);
+  const loggedInUserId = useSelector((state) => state.uid);
   const isLiked = Boolean(likes[loggedInUserId]);
   const likeCount = Object.keys(likes).length;
 
   const { palette } = useTheme();
-  const main = palette.neutral.main;
-  const primary = palette.primary.main;
+  const main =colors.grey;
+  const primary = colors.lightBlue;
   const [newComment, setNewComment] = useState("");
   const [openCommentDialog, setOpenCommentDialog] = useState(false);
 
@@ -106,7 +104,7 @@ const PostWidget = ({
     handleCommentDialogClose();
     if (!newComment.trim()) return;
     
-    const response = await fetch(`http://localhost:3001/posts/${postId}/comment`, {
+    const response = await fetch(`http://localhost:5000/api/posts/${postId}/comment`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -128,7 +126,7 @@ const PostWidget = ({
 
   const handleDeletePost = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/posts/${postId}/delete`, {
+      const response = await fetch(`http://localhost:5000/api/posts/${postId}/delete`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -167,7 +165,7 @@ const PostWidget = ({
   const handleUpdatePost = async () => {
     console.log("Updating post"); // For debugging
     try {
-      const response = await fetch(`http://localhost:3001/posts/${postId}/update`, {
+      const response = await fetch(`http://localhost:5000/api/posts/${postId}/update`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -206,8 +204,7 @@ const PostWidget = ({
       <Friend
         friendId={postUserId}
         name={name}
-        subtitle={location}
-        userPicturePath={userPicturePath}
+        userPicturePath={"/b.png"}
       />
       {postUserId === loggedInUserId && (
         <div>
@@ -234,15 +231,7 @@ const PostWidget = ({
       <Typography color={main} sx={{ mt: "1rem" }}>
         {description}
       </Typography>
-      {picturePath && (
-        <img
-          width="100%"
-          height="auto"
-          alt="post"
-          style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
-          src={`http://localhost:3001/assets/${picturePath}`}
-        />
-      )}
+     
       <FlexBetween mt="0.25rem">
         <FlexBetween gap="1rem">
           <FlexBetween gap="0.3rem">

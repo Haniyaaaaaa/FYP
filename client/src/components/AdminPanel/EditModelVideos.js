@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Table, Typography, message, Button, Modal, Form, Input } from "antd";
+import {
+  Table,
+  Typography,
+  message,
+  Button,
+  Modal,
+  Form,
+  Input,
+  Popconfirm,
+} from "antd";
 import axios from "axios";
 import NavbarAdmin from "./NavbarAdmin";
 import Footer from "../Footer";
@@ -8,6 +17,7 @@ export default function EditModelVideos() {
   const [videos, setVideos] = useState([]);
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
+  const [selectedVideo, setSelectedVideo] = useState(null); // New state to hold selected video for editing
 
   useEffect(() => {
     fetchVideos();
@@ -18,7 +28,7 @@ export default function EditModelVideos() {
       const response = await axios.get(
         "http://localhost:5000/api/videos/get-videos"
       );
-      console.log("Videos:");
+      console.log("Videos:", response.data);
       setVideos(response.data);
     } catch (error) {
       console.error("Error fetching videos:", error);
@@ -28,25 +38,59 @@ export default function EditModelVideos() {
 
   const handleAddVideo = () => {
     setVisible(true);
+    setSelectedVideo(null); // Clear selected video when adding new
+  };
+
+  const handleEditVideo = (record) => {
+    setVisible(true);
+    setSelectedVideo(record); // Set selected video for editing
   };
 
   const handleCancel = () => {
     setVisible(false);
     form.resetFields();
+    setSelectedVideo(null); // Clear selected video
   };
 
   const handleSaveVideo = () => {
     form.validateFields().then(async (values) => {
       try {
-        await axios.post("http://localhost:5000/api/videos/save-video", values);
+        if (selectedVideo) {
+          // If selected video exists, update it
+          await axios.put(
+            `http://localhost:5000/api/videos/${selectedVideo._id}/update`,
+            values
+          );
+          message.success("Video updated successfully");
+        } else {
+          // Otherwise, add a new video
+          await axios.post(
+            "http://localhost:5000/api/videos/save-video",
+            values
+          );
+          message.success("Video saved successfully");
+        }
         setVisible(false);
         form.resetFields();
-        message.success("Video saved successfully");
+        fetchVideos();
       } catch (error) {
-        console.error("Error saving video:", error);
-        message.error("Failed to save video");
+        console.error("Error saving/updating video:", error);
+        message.error("Failed to save/update video");
       }
     });
+  };
+
+  const handleDeleteVideo = async (record) => {
+    try {
+      await axios.delete(
+        `http://localhost:5000/api/videos/${record._id}/delete`
+      );
+      message.success("Video deleted successfully");
+      fetchVideos();
+    } catch (error) {
+      console.error("Error deleting video:", error);
+      message.error("Failed to delete video");
+    }
   };
 
   const columns = [
@@ -54,13 +98,48 @@ export default function EditModelVideos() {
       key: "videoLink",
       title: "Link",
       dataIndex: "videoLink",
-      width: "20%",
+      width: "40%",
     },
     {
       key: "videoDescription",
       title: "Description",
       dataIndex: "videoDescription",
+      width: "40%",
+    },
+    {
+      key: "date",
+      title: "Date Added",
+      dataIndex: "date",
       width: "20%",
+    },
+    {
+      key: "edit",
+      title: "Edit",
+      width: "10%",
+      render: (text, record) => (
+        <Button type="link" onClick={() => handleEditVideo(record)}>
+          Edit
+        </Button>
+      ),
+    },
+    {
+      key: "delete",
+      title: "Delete",
+      width: "10%",
+      render: (text, record) => (
+        <Popconfirm
+          title="Are you sure you want to delete this video?"
+          onConfirm={() => {
+            handleDeleteVideo(record);
+          }}
+          okText="Yes"
+          cancelText="No"
+        >
+          <Button type="link" danger>
+            Delete
+          </Button>
+        </Popconfirm>
+      ),
     },
   ];
 
@@ -94,12 +173,12 @@ export default function EditModelVideos() {
       />
 
       <Modal
-        title="Add Video"
+        title={selectedVideo ? "Edit Video" : "Add Video"}
         visible={visible}
         onCancel={handleCancel}
         onOk={handleSaveVideo}
       >
-        <Form form={form}>
+        <Form form={form} initialValues={selectedVideo}>
           <Form.Item
             name="videoLink"
             label="Video Link"

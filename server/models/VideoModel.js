@@ -14,11 +14,17 @@ const VideoSchema = new Schema({
     type: String,
     required: true,
   },
+  date: {
+    type: Date, // Define date property as Date type
+    default: Date.now, // Optional: Set default value to current date
+  },
 });
 
 VideoSchema.set("toJSON", {
   transform: (doc, ret) => {
-    ret.date = ret.date.toISOString().slice(0, 10); // Change the format as needed
+    if (ret.date) {
+      ret.date = ret.date.toISOString().slice(0, 10);
+    }
     return ret;
   },
 });

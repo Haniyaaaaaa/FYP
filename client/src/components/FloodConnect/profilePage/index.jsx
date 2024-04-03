@@ -1,16 +1,14 @@
 import { Box, useMediaQuery } from "@mui/material";
-import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import FriendListWidget from "./widgets/FriendListWidget";
-import MyPostWidget from "./widgets/MyPostWidget";
-import PostsWidget from "./widgets/PostsWidget";
-import UserWidget from "./widgets/UserWidget";
+import FriendListWidget from "../widgets/FriendListWidget";
+import MyPostWidget from "../widgets/MyPostWidget";
+import PostsWidget from "../widgets/PostsWidget";
+import UserWidget from "../widgets/UserWidget";
 
 const ProfilePage = () => {
 
-  const userId = useSelector((state) => state.id);
-
+  const userId = useSelector((state) => state.uid);
+  const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
   if (!userId) return null;
 
@@ -19,12 +17,11 @@ const ProfilePage = () => {
       <Box
         width="100%"
         padding="2rem 6%"
-        display={isNonMobileScreens ? "flex" : "block"}
         gap="2rem"
         justifyContent="center"
       >
         <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
-          <UserWidget userId={userId} picturePath={""} />
+          <UserWidget userId={userId} picturePath={"/b.png"} />
           <Box m="2rem 0" />
           <FriendListWidget userId={userId} />
         </Box>
@@ -32,7 +29,7 @@ const ProfilePage = () => {
           flexBasis={isNonMobileScreens ? "42%" : undefined}
           mt={isNonMobileScreens ? undefined : "2rem"}
         >
-          <MyPostWidget picturePath={""} />
+          <MyPostWidget picturePath={"/b.png"} />
           <Box m="2rem 0" />
           <PostsWidget userId={userId} isProfile />
         </Box>
