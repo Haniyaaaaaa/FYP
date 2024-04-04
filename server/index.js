@@ -19,6 +19,8 @@ const dashboardRoutes = require("./routes/dashboard.js");
 // const postfloodchecklistRoutes = require("./routes/postfloodChecklist.js");
 const videoRoutes = require("./routes/videos.js");
 const postRoutes = require("./routes/posts.js");
+const locationRoutes = require("./routes/locations.js");
+const modelCostRoutes = require("./routes/modelcosts.js");
 // database connection
 connection();
 
@@ -42,6 +44,8 @@ app.use("/api/dashboard", dashboardRoutes);
 // app.use("/api/checklist", prefloodchecklistRoutes);
 // app.use("/api/checklistt", postfloodchecklistRoutes);
 app.use("/api/videos", videoRoutes);
+app.use("/api/locations", locationRoutes);
+app.use("/api/modelcosts", modelCostRoutes);
 
 const port = process.env.PORT || 5000;
 app.listen(port, console.log(`Listening on port ${port}...`));

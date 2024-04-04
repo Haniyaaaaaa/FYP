@@ -92,10 +92,7 @@ router.get("/:id/verify/:token", async (req, res) => {
 
 router.get("/get-users", async (req, res) => {
   try {
-    const AllUsers = await UserModel.find({
-      verified: true,
-      role: { $ne: "power admin" },
-    });
+    const AllUsers = await UserModel.find({});
     res.json(AllUsers);
   } catch (error) {
     console.error("Error fetching random questions:", error);
