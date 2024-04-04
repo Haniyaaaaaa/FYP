@@ -10,6 +10,8 @@ import DownloadButton from "@mui/icons-material/Download";
 import Select from "react-dropdown-select";
 import Interactive3DModel from "../Model/Interactive3dModel";
 import axios from "axios";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 const ModelView = () => {
   let subtitle;
@@ -47,15 +49,11 @@ const ModelView = () => {
     setIsOpen(true);
   }
 
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    subtitle.style.color = "#f00";
-  }
-
   function closeModal() {
     setSqft(0);
     setIsOpen(false);
   }
+
   const handleCalculateCost = async (e) => {
     e.preventDefault();
     try {
@@ -65,24 +63,20 @@ const ModelView = () => {
       const cost = response.data.cost;
       const totalCost = cost * sqft;
       setCost(totalCost);
-      console.log("Total Cost:", totalCost);
     } catch (error) {
       console.error("Error calculating cost:", error);
     }
   };
 
   useEffect(() => {
-    //userId is retrieved from local storage
     const role = localStorage.getItem("role");
     setUserRole(role);
-    console.log(userRole);
     fetchLocations();
   }, []);
 
   const location = useLocation();
   const { url, title, desc } = location.state?.data || {};
 
-  // Filter locations based on selected district
   const districtOptions = locations.map((location) => ({
     label: location.district,
     value: location.district,
@@ -96,6 +90,34 @@ const ModelView = () => {
           value: location,
         }))
     : [];
+
+  const generatePDF = async () => {
+    try {
+      const pdf = new jsPDF();
+
+      // Title
+      pdf.text(title, 10, 10);
+
+      // Description
+      const descLines = pdf.splitTextToSize(
+        desc,
+        pdf.internal.pageSize.getWidth() - 20
+      );
+      pdf.text(descLines, 10, 30);
+
+      // Selected district and location
+      pdf.text(`District: ${selectedDistrict}`, 10, 60);
+      pdf.text(`Location: ${selectedLocation}`, 10, 70);
+
+      // Sqft and cost
+      pdf.text(`Sqft: ${sqft}`, 10, 90);
+      pdf.text(`Cost: ${cost} PKR`, 10, 100);
+
+      pdf.save("modelcost.pdf");
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+    }
+  };
 
   return (
     <React.Fragment>
@@ -111,9 +133,12 @@ const ModelView = () => {
         <div className={styles.main_container}>
           <Interactive3DModel />
           <div className="ml-10">
-            <p className={styles.title}>{title}</p>
-            <p className={styles.desc}>{desc}</p>
-            {/* Other details */}
+            <p id="pdf-content" className={styles.title}>
+              {title}
+            </p>
+            <p id="pdf-content" className={styles.desc}>
+              {desc}
+            </p>
           </div>
         </div>
         <div className="mt-10">
@@ -124,11 +149,9 @@ const ModelView = () => {
             <span className="relative">Calculate cost</span>
           </button>
         </div>
-        {/* calculate cost modal */}
       </div>
       <Modal
         isOpen={modalIsOpen}
-        onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
         style={customStyles}
         contentLabel="Example Modal"
@@ -150,6 +173,7 @@ const ModelView = () => {
             />
             <div>Sqft.</div>
             <input
+              id="pdf-content"
               type="number"
               value={sqft}
               onChange={(e) => {
@@ -169,10 +193,10 @@ const ModelView = () => {
             <span className="relative">Calculate cost</span>
           </button>
 
-          <p>{cost} PKR</p>
+          <p id="pdf-content">{cost} PKR</p>
 
           <IconButton>
-            <div>
+            <div onClick={generatePDF}>
               Download pdf
               <DownloadButton />
             </div>
