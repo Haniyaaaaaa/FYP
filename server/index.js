@@ -21,6 +21,7 @@ const videoRoutes = require("./routes/videos.js");
 const postRoutes = require("./routes/posts.js");
 const locationRoutes = require("./routes/locations.js");
 const modelCostRoutes = require("./routes/modelcosts.js");
+const floodModelRoutes = require("./routes/floodmodels.js");
 // database connection
 connection();
 
@@ -46,6 +47,6 @@ app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/videos", videoRoutes);
 app.use("/api/locations", locationRoutes);
 app.use("/api/modelcosts", modelCostRoutes);
-
+app.use("/api/floodmodels", floodModelRoutes);
 const port = process.env.PORT || 5000;
 app.listen(port, console.log(`Listening on port ${port}...`));

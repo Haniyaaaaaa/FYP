@@ -1,4 +1,4 @@
-import { Box, Typography, colors, useTheme } from "@mui/material";
+import { Box, Typography, colors } from "@mui/material";
 import Friend from "../components/Friend";
 import WidgetWrapper from "../components/WidgetWrapper";
 import { useEffect } from "react";
@@ -7,7 +7,6 @@ import { setFriends } from "../state";
 
 const FriendListWidget = ({ userId }) => {
   const dispatch = useDispatch();
-  const { palette } = useTheme();
   const token = useSelector((state) => state.token);
   const friends = [];
 

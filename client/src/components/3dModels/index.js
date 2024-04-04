@@ -8,49 +8,27 @@ import NavbarAdmin from "../AdminPanel/NavbarAdmin";
 import NavbarNormalvictim from "../NavbarNormalvictim";
 import PlayButtonIcon from "@mui/icons-material/PlayCircle";
 import Slider from "react-slick";
+import axios from "axios";
 
 const ThreeDModels = () => {
   const [userRole, setUserRole] = useState("");
-  const data = [
-    {
-      id: 1,
-      url: "/models/image1.jpg",
-      title: "Model 1",
-      desc: "Some description is required  img elements must have an alt prop, either with meaningful text, or an empty string for decorative images",
-    },
-    {
-      id: 2,
-      url: "/models/image1.jpg",
-      title: "Model 2",
-      desc: "Some description is required  img elements must have an alt prop, either with meaningful text, or an empty string for decorative images",
-    },
-    {
-      id: 3,
-      url: "/models/image1.jpg",
-      title: "Model 3",
-      desc: "Some description is required  img elements must have an alt prop, either with meaningful text, or an empty string for decorative images",
-    },
-    {
-      id: 4,
-      url: "/models/image1.jpg",
-      title: "Model 4",
-      desc: "Some description is required  img elements must have an alt prop, either with meaningful text, or an empty string for decorative images",
-    },
-    {
-      id: 5,
-      url: "/models/image1.jpg",
-      title: "Model 5",
-      desc: "Some description is required  img elements must have an alt prop, either with meaningful text, or an empty string for decorative images",
-    },
-  ];
+  const [models, setModels] = useState([]);
 
-  const url = `http://localhost:5000/api/update-profile`;
+  const url = `http://localhost:5000/api/floodmodels/get-models`;
 
   useEffect(() => {
-    //userId is retreived from local storage
+    const fetchModels = async () => {
+      try {
+        const response = await axios.get(url);
+        setModels(response.data);
+      } catch (error) {
+        console.error("Error fetching models:", error);
+      }
+    };
+    fetchModels();
+
     const role = localStorage.getItem("role");
     setUserRole(role);
-    console.log(userRole);
   }, []);
 
   var settings = {
@@ -80,19 +58,25 @@ const ThreeDModels = () => {
         {/* image slider */}
         <div className={styles.slider_container}>
           <Slider {...settings}>
-            {data.map((d) => (
+            {models.map((model) => (
               <Link
-                to={`/detail/${d.id}`}
-                state={{ data: { url: d.url, title: d.title, desc: d.desc } }}
-                key={d.id}
+                to={`/detail/${model.id}`}
+                state={{
+                  data: {
+                    url: model.url,
+                    title: model.title,
+                    desc: model.desc,
+                  },
+                }}
+                key={model.id}
                 className={styles.link}
               >
                 <div className="p-2 relative group hover:translate-y-[-5px] transition-transform rounded ">
                   <img
-                    src={d.url}
+                    src={model.url}
                     className="h-36 rounded hover:cursor-pointer"
                   />
-                  <p style={{ color: "black" }}>{d.title}</p>
+                  <p style={{ color: "black" }}>{model.title}</p>
                 </div>
               </Link>
             ))}

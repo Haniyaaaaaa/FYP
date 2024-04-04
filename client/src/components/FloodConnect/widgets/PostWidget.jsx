@@ -84,7 +84,6 @@ const PostWidget = ({
 
   const { palette } = useTheme();
   const main =colors.grey;
-  const primary = colors.lightBlue;
   const [newComment, setNewComment] = useState("");
   const [openCommentDialog, setOpenCommentDialog] = useState(false);
 
