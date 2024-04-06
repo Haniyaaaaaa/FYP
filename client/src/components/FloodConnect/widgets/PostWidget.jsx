@@ -83,7 +83,6 @@ const PostWidget = ({
     setOpenShareDialog(false);
   };
 
-  const token = useSelector((state) => state.token);
   const loggedInUserId = useSelector((state) => state.uid);
   const isLiked = Boolean(likes[loggedInUserId]);
   const likeCount = Object.keys(likes).length;

@@ -1,4 +1,4 @@
-import { Box, Typography, Divider,  colors } from "@mui/material";
+import { Box, Typography, Divider, colors } from "@mui/material";
 import UserImage from "../components/UserImage";
 import FlexBetween from "../components/FlexBetween";
 import WidgetWrapper from "../components/WidgetWrapper";
@@ -10,13 +10,15 @@ const UserWidget = ({ userId, picturePath }) => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const uid = useSelector((state) => state.uid);
-  const dark = '#000000';
-  const medium = '#000000';
-  const main = '#000000';
+  const dark = "#000000";
+  const medium = "#000000";
+  const main = "#000000";
 
   const getUser = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/users/get-users/${uid}`);
+      const response = await fetch(
+        `http://localhost:5000/api/users/get-users/${uid}`
+      );
       const data = await response.json();
       setUser(data);
       console.log(response);
@@ -32,7 +34,6 @@ const UserWidget = ({ userId, picturePath }) => {
   if (!user) {
     return null;
   }
-
 
   return (
     <WidgetWrapper>
@@ -56,20 +57,15 @@ const UserWidget = ({ userId, picturePath }) => {
                 },
               }}
             >
-              {
-              user.firstName
-              }
+              {user.firstName}
             </Typography>
-            <Typography color={medium}>{0} friends</Typography>
           </Box>
         </FlexBetween>
-        
       </FlexBetween>
 
       <Divider />
 
       {/* SECOND ROW */}
-
 
       <Divider />
 
@@ -80,7 +76,6 @@ const UserWidget = ({ userId, picturePath }) => {
         <Typography fontSize="1rem" color={main} fontWeight="500" mb="1rem">
           Notifications
         </Typography>
-
       </Box>
     </WidgetWrapper>
   );

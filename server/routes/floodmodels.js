@@ -16,7 +16,7 @@ router.post("/save-model", async (req, res) => {
   try {
     const { url, title, desc } = req.body;
 
-    const newModel = new VideoModel({
+    const newModel = new FloodModel({
       url,
       title,
       desc,
@@ -41,7 +41,7 @@ router.put("/:id/update", async (req, res) => {
     if (!updatedModel) {
       return res.status(404).json({ message: "Model not found" });
     }
-    res.status(200).json(updatedVideo);
+    res.status(200).json(updatedModel);
   } catch (error) {
     console.error("Error updating model details:", error);
     res.status(500).json({ message: "Internal Server Error" });

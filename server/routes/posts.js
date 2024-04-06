@@ -90,14 +90,14 @@ router.post("/:id/comment", async (req, res) => {
       return res.status(404).json({ message: "Post not found" });
     }
 
-    const user = await User.findById(userId);
+    const user = await UserModel.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
     const newComment = {
       userId: user._id,
-      username: user.username,
+      username: user.firstName,
       comment: comment,
       timestamp: new Date(),
     };

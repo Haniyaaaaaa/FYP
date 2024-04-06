@@ -60,7 +60,7 @@ const ThreeDModels = () => {
           <Slider {...settings}>
             {models.map((model) => (
               <Link
-                to={`/detail/${model.id}`}
+                to={`/detail/${model._id}`}
                 state={{
                   data: {
                     url: model.url,
