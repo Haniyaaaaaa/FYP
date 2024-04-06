@@ -223,36 +223,6 @@ export default function Navbar() {
         </Collapse>
         <Divider />
 
-        {/* Flood Recovery and Renewal Assist Section */}
-        <ListItemButton onClick={handleRenewalAssistClick}>
-          <SafetyCheckIcon style={{ opacity: "0.6", marginRight: "8px" }} />
-          <ListItemText primary="Flood Recovery and Renewal Assist" />
-          <ExpandMoreIcon />
-        </ListItemButton>
-        <Collapse in={renewalAssistOpen} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <Link
-              to="/pre-flood-checklist"
-              style={{ textDecoration: "none", color: "inherit" }}
-              onClick={handleNavbarSectionClose}
-            >
-              <ListItemButton sx={{ pl: 4 }}>
-                <ListItemText primary="Pre-Flood Recovery Checklist" />
-              </ListItemButton>
-            </Link>
-            <Link
-              to="/post-flood-checklist"
-              style={{ textDecoration: "none", color: "inherit" }}
-              onClick={handleNavbarSectionClose}
-            >
-              <ListItemButton sx={{ pl: 4 }}>
-                <ListItemText primary="Post-Flood Recovery Checklist" />
-              </ListItemButton>
-            </Link>
-          </List>
-        </Collapse>
-        <Divider />
-
         {/* feedback Section */}
         <Link
           to="/feedback"

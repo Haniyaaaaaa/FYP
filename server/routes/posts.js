@@ -1,7 +1,27 @@
 const router = require("express").Router();
 const Post = require("../models/PostModel");
-const UserModel = require("../models/UserModel");
+const { UserModel, validate } = require("../models/UserModel");
 
+router.post("/save-post", async (req, res) => {
+  try {
+    const { userId, description } = req.body;
+    const user = await UserModel.findOne({ _id: userId });
+    const newPost = new Post({
+      userId,
+      username: "user",
+      userPicturePath: "/a.png",
+      likes: {},
+      comments: [],
+      description: description,
+    });
+    await newPost.save();
+
+    const post = await Post.find();
+    res.status(201).json(post);
+  } catch (err) {
+    res.status(409).json({ message: err.message });
+  }
+});
 router.get("/", async (req, res) => {
   try {
     const post = await Post.find();
@@ -109,19 +129,18 @@ router.put("/:id/update", async (req, res) => {
   }
 });
 router.delete("/:id/delete", async (req, res) => {
-  const { id } = req.params; // Get the post ID from the URL params
+  const { id } = req.params;
 
   try {
-    const post = await Post.findById(id);
-    if (!post) {
+    const deletedPost = await Post.findByIdAndDelete(id);
+    if (!deletedPost) {
       return res.status(404).json({ message: "Post not found" });
     }
-
-    await post.remove(); // Remove the post from the database
 
     res.status(200).json({ message: "Post successfully deleted" });
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 });
+
 module.exports = router;

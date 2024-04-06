@@ -13,15 +13,22 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  colors
+  colors,
 } from "@mui/material";
-import { EditOutlined, DeleteOutlined, ImageOutlined, MoreHorizOutlined } from "@mui/icons-material";
+import {
+  EditOutlined,
+  DeleteOutlined,
+  ImageOutlined,
+  MoreHorizOutlined,
+} from "@mui/icons-material";
 import FlexBetween from "../components/FlexBetween";
 import Dropzone from "react-dropzone";
 import UserImage from "../components/UserImage";
 import WidgetWrapper from "../components/WidgetWrapper";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "../state";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import axios from "axios";
 
 const MyPostWidget = ({ picturePath }) => {
   const dispatch = useDispatch();
@@ -30,7 +37,7 @@ const MyPostWidget = ({ picturePath }) => {
   const [image, setImage] = useState(null);
   const [post, setPost] = useState("");
   const { palette } = useTheme();
-  const uid = useSelector((state) => state.token);
+  const uid = useSelector((state) => state.uid);
 
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const mediumMain = colors.grey[500];
@@ -38,7 +45,7 @@ const MyPostWidget = ({ picturePath }) => {
 
   const handleDialogClose = (action) => {
     setOpenDialog(false);
-    if (action === 'discard') {
+    if (action === "discard") {
       setPost("");
       setImage(null);
     }
@@ -49,25 +56,31 @@ const MyPostWidget = ({ picturePath }) => {
   };
 
   const handlePost = async () => {
-    const formData = new FormData();
-    formData.append("userId", uid);
-    formData.append("description", post);
-    if (image) {
-      formData.append("picture", image);
-      formData.append("picturePath", image.name);
-    }
+    const postData = {
+      userId: uid,
+      description: post,
+    };
 
     setOpenDialog(false);
 
-    const response = await fetch(`http://localhost:3001/posts`, {
-      method: "POST",
+    try {
+      const response = await axios.post(
+        `http://localhost:5000/api/posts/save-post`,
+        postData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      body: formData,
-    });
-    const posts = await response.json();
-    dispatch(setPosts({ posts }));
-    setImage(null);
-    setPost("");
+      const posts = response.data;
+      dispatch(setPosts({ posts }));
+      setImage(null);
+      setPost("");
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
@@ -85,33 +98,43 @@ const MyPostWidget = ({ picturePath }) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => handleDialogClose('discard')}
+          <Button
+            onClick={() => handleDialogClose("discard")}
             sx={{
               color: palette.background.alt,
-              backgroundColor: '#3bb19b',
+              backgroundColor: "#3bb19b",
               borderRadius: "3rem",
-              '&:hover': {
-                cursor: 'pointer',
-                color: 'black',
+              "&:hover": {
+                cursor: "pointer",
+                color: "black",
               },
             }}
-          >Discard</Button>
-          <Button onClick={handlePost} autoFocus
+          >
+            Discard
+          </Button>
+          <Button
+            onClick={handlePost}
+            autoFocus
             sx={{
               color: palette.background.alt,
-              backgroundColor: '#3bb19b',
+              backgroundColor: "#3bb19b",
               borderRadius: "3rem",
-              '&:hover': {
-                cursor: 'pointer',
-                color: 'black',
+              "&:hover": {
+                cursor: "pointer",
+                color: "black",
               },
-            }}>
+            }}
+          >
             Confirm
           </Button>
         </DialogActions>
       </Dialog>
       <FlexBetween gap="1.5rem">
-        <UserImage image={picturePath} />
+        {picturePath ? (
+          <UserImage image={picturePath} />
+        ) : (
+          <AccountCircleIcon />
+        )}
         <InputBase
           placeholder="What's on your mind..."
           onChange={(e) => setPost(e.target.value)}
@@ -124,6 +147,7 @@ const MyPostWidget = ({ picturePath }) => {
           }}
         />
       </FlexBetween>
+
       {isImage && (
         <Box
           border={`1px solid ${medium}`}
@@ -183,8 +207,7 @@ const MyPostWidget = ({ picturePath }) => {
         </FlexBetween>
 
         {isNonMobileScreens ? (
-          <>
-          </>
+          <></>
         ) : (
           <FlexBetween gap="0.25rem">
             <MoreHorizOutlined sx={{ color: mediumMain }} />
@@ -196,11 +219,11 @@ const MyPostWidget = ({ picturePath }) => {
           onClick={handlePostDialogOpen}
           sx={{
             color: palette.background.alt,
-            backgroundColor: '#3bb19b',
+            backgroundColor: "#3bb19b",
             borderRadius: "3rem",
-            '&:hover': {
-              cursor: 'pointer',
-              color: 'black',
+            "&:hover": {
+              cursor: "pointer",
+              color: "black",
             },
           }}
         >
