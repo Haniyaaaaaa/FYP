@@ -47,6 +47,7 @@ import PreFloodChecklist from "./components/RecoveryAndRenewalAssist/PreFloodChe
 import PostFloodChecklist from "./components/RecoveryAndRenewalAssist/PostFloodChecklist";
 import Edit3dModels from "./components/AdminPanel/Edit3dModel";
 import EditModelVideos from "./components/AdminPanel/EditModelVideos";
+import EditSqftCost from "./components/AdminPanel/EditSqftCost";
 import FloodConnect from "./components/FloodConnect/homePage";
 import ProfilePage from "./components/FloodConnect/profilePage";
 
@@ -243,6 +244,9 @@ function App() {
         )}
         {userToken && (
           <Route path="/edit-model-videos" element={<EditModelVideos />} />
+        )}
+        {userToken && (
+          <Route path="/edit-sqft-cost" element={<EditSqftCost />} />
         )}
         {userToken && (
           <Route path="/user-feedbacks" element={<UserFeedback />} />

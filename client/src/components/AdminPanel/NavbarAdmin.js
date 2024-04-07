@@ -101,6 +101,19 @@ export default function Navbar() {
         </Link>
 
         <Divider />
+        {/* sqft cost */}
+        <Link
+          to="/edit-sqft-cost"
+          style={{ textDecoration: "none", color: "inherit" }}
+          onClick={handleNavbarSectionClose}
+        >
+          <ListItemButton>
+            <ViewInArIcon style={{ opacity: "0.6", marginRight: "8px" }} />
+            <ListItemText primary="Edit Sqft Cost" />
+          </ListItemButton>
+        </Link>
+
+        <Divider />
         {/* model videos */}
         <Link
           to="/edit-model-videos"
