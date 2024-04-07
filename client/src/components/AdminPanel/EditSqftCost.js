@@ -184,46 +184,47 @@ export default function EditSqftCost() {
   return (
     <div>
       <NavbarAdmin />
-      <Typography.Title level={2}>SQFT Costs</Typography.Title>
+      <div className="ml-2">
+        <Typography.Title level={2}>SQFT Costs</Typography.Title>
 
-      <Button type="primary" onClick={handleAddLocation}>
-        Add Location
-      </Button>
-      <Select
-        showSearch
-        style={{ width: 200, marginLeft: 16 }}
-        placeholder="Select a district or add a new one"
-        optionFilterProp="children"
-        onChange={(value) => {
-          if (value === "new") {
-            setNewDistrict(""); // Show input for new district
-            setSelectedDistrict(null); // Reset selected district
-          } else {
-            setNewDistrict(null); // Hide input for new district
-            setSelectedDistrict(value); // Set selected district
-          }
-        }}
-        filterOption={(input, option) =>
-          option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-        }
-      >
-        {districts.map((district) => (
-          <Option key={district._id} value={district.district}>
-            {district.district}
-          </Option>
-        ))}
-        <Option value="new">Add New District</Option>
-      </Select>
-
-      {newDistrict !== null && (
-        <Input
+        <Button type="primary" onClick={handleAddLocation}>
+          Add Location
+        </Button>
+        <Select
+          showSearch
           style={{ width: 200, marginLeft: 16 }}
-          placeholder="Enter new district name"
-          value={newDistrict}
-          onChange={(e) => setNewDistrict(e.target.value)}
-        />
-      )}
+          placeholder="Select a district or add a new one"
+          optionFilterProp="children"
+          onChange={(value) => {
+            if (value === "new") {
+              setNewDistrict(""); // Show input for new district
+              setSelectedDistrict(null); // Reset selected district
+            } else {
+              setNewDistrict(null); // Hide input for new district
+              setSelectedDistrict(value); // Set selected district
+            }
+          }}
+          filterOption={(input, option) =>
+            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+          }
+        >
+          {districts.map((district) => (
+            <Option key={district._id} value={district.district}>
+              {district.district}
+            </Option>
+          ))}
+          <Option value="new">Add New District</Option>
+        </Select>
 
+        {newDistrict !== null && (
+          <Input
+            style={{ width: 200, marginLeft: 16 }}
+            placeholder="Enter new district name"
+            value={newDistrict}
+            onChange={(e) => setNewDistrict(e.target.value)}
+          />
+        )}
+      </div>
       <Table
         dataSource={filteredLocations}
         columns={columns}
