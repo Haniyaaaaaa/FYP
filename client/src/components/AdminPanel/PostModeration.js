@@ -1,29 +1,23 @@
 import React, { useState, useEffect } from "react";
-import {
-  Table,
-  Typography,
-  message,
-  Tooltip,
-  Modal,
-  Input,
-  Button,
-} from "antd";
+import { Table, Typography, message, Tooltip, Modal, Button } from "antd";
 import axios from "axios";
 import NavbarAdmin from "./NavbarAdmin";
 import Footer from "../Footer";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import PostWidget from "./widgets/PostWidget";
 
-export default function UserComplaints() {
+export default function PostModeration() {
   const [complaint, setComplaint] = useState([]);
   const [visible, setVisible] = useState(false);
   const [adminResponse, setAdminResponse] = useState("");
   const [complaintId, setComplaintId] = useState("");
+  const [selectedComplaint, setSelectedComplaint] = useState(null);
 
   useEffect(() => {
     const fetchUserComplaint = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/complaint/fetchUser-complaints"
+          "http://localhost:5000/api/postmoderation/fetch-modposts"
         );
         setComplaint(response.data);
       } catch (error) {
@@ -37,19 +31,16 @@ export default function UserComplaints() {
   const columns = [
     {
       key: 1,
-      title: "User Name", // Merged column title
-      dataIndex: "username", // Use "username" as the key for the merged value
-      render: (record) => `${record.firstName} ${record.lastName}`,
+      title: "User Name",
+      dataIndex: "firstName",
       width: "20%",
     },
-
     {
       key: 2,
       title: "Complaint",
       dataIndex: "complaint",
       width: "45%",
     },
-
     {
       key: 3,
       title: "Date",
@@ -82,29 +73,17 @@ export default function UserComplaints() {
 
   const handleOpenModal = (record) => {
     setVisible(true);
+    setSelectedComplaint(record);
     setComplaintId(record._id);
-  };
-
-  const handleOk = async () => {
-    // Handle logic when send button is clicked
-    // You can perform API calls to save the response or any other logic
-
-    if (!adminResponse) {
-      message.error("Please enter response");
-      return;
-    }
-
-    //write
-    const url = `http://localhost:5000/api/complaint/save-response/${complaintId}`;
-    const response = await axios.post(url, { adminResponse });
-
-    setVisible(false);
-    setAdminResponse("");
-    message.success(response.data.message);
   };
 
   const handleCancel = () => {
     setVisible(false);
+  };
+
+  const handleOk = async (res) => {
+    console.log(res);
+    setAdminResponse(res);
   };
 
   return (
@@ -121,34 +100,42 @@ export default function UserComplaints() {
         level={2}
         style={{ marginTop: "2rem", marginLeft: "12px" }}
       >
-        User Complaints
+        Reported Posts
       </Typography.Title>
       <Table columns={columns} dataSource={complaint} />
 
       <Modal
         title="Respond"
-        open={visible}
-        onOk={handleOk} //when send button is clicked
-        onCancel={handleCancel} //when cancel button is clicked
+        visible={visible}
+        onCancel={handleCancel}
         footer={[
-          <Button key="back" onClick={handleCancel}>
-            Cancel
+          <Button
+            key="moderate"
+            style={{ backgroundColor: "#3bb19b", color: "white" }}
+            onClick={() => {
+              handleOk("Moderate");
+            }}
+          >
+            Moderate
           </Button>,
           <Button
-            key="submit"
+            key="pass"
             style={{ backgroundColor: "#3bb19b", color: "white" }}
-            onClick={handleOk}
+            onClick={() => {
+              handleOk("Pass");
+            }}
           >
-            Send
+            Pass
           </Button>,
         ]}
       >
-        <Input.TextArea
-          rows={4}
-          value={adminResponse}
-          onChange={(e) => setAdminResponse(e.target.value)}
-          placeholder="Type your response here"
-        />
+        {selectedComplaint && ( // Render PostWidget component if selectedComplaint is not null
+          <PostWidget
+            postUserId={selectedComplaint.userId}
+            name={selectedComplaint.username}
+            description={selectedComplaint.description}
+          />
+        )}
       </Modal>
 
       <div style={{ bottom: "0", width: "100%", marginTop: "auto" }}>
@@ -157,5 +144,3 @@ export default function UserComplaints() {
     </div>
   );
 }
-
-// username, role, date, location, prediction result

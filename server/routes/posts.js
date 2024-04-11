@@ -8,7 +8,7 @@ router.post("/save-post", async (req, res) => {
     const user = await UserModel.findOne({ _id: userId });
     const newPost = new Post({
       userId,
-      username: "user",
+      username: user.firstName,
       userPicturePath: "/a.png",
       likes: {},
       comments: [],

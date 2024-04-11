@@ -37,9 +37,66 @@ const PostWidget = ({
   likes,
   comments,
   description,
+  isComplaint,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
+  const [openReportDialog, setOpenReportDialog] = useState(false);
+  const [reportReason, setReportReason] = useState("");
+  const [isComments, setIsComments] = useState(false);
+  const [openShareDialog, setOpenShareDialog] = useState(false);
+  const [newComment, setNewComment] = useState("");
+  const [openCommentDialog, setOpenCommentDialog] = useState(false);
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedDescription, setEditedDescription] = useState(description);
+  const loggedInUserId = useSelector((state) => state.uid);
+  const loggedInUsername = useSelector((state) => state.firstName);
+  const isPostOwner = postUserId === loggedInUserId;
+  const isLiked = Boolean(likes[loggedInUserId]);
+  const likeCount = Object.keys(likes).length;
+  const { palette } = useTheme();
+  const main = colors.grey;
+
+  const dispatch = useDispatch();
+
+  const handleOpenReportDialog = () => {
+    setOpenReportDialog(true);
+    handleClose();
+  };
+
+  const handleCloseReportDialog = () => {
+    setOpenReportDialog(false);
+    handleClose();
+  };
+
+  const handleReportReasonChange = (e) => {
+    setReportReason(e.target.value);
+  };
+
+  const handleSubmitReport = async () => {
+    try {
+      const url = "http://localhost:5000/api/postmoderation/save";
+
+      const response = await axios.post(url, {
+        complaint: reportReason,
+        userId: loggedInUserId,
+        postId,
+        username: loggedInUsername,
+      });
+      console.log(response.data);
+      setReportReason("");
+      console.log("Complaint submitted successfully!");
+    } catch (error) {
+      console.log(error);
+      console.log("Failed to submit complaint. Please try again.");
+    }
+
+    handleCloseReportDialog();
+  };
+
+  const handleReportPost = () => {
+    handleOpenReportDialog();
+  };
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -49,32 +106,18 @@ const PostWidget = ({
     setAnchorEl(null);
   };
 
-  const [isComments, setIsComments] = useState(false);
-  const [openShareDialog, setOpenShareDialog] = useState(false);
-
-  const dispatch = useDispatch();
-  const twitterShareUrl = (text, url) => {
-    return `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-      text
-    )}&url=${encodeURIComponent(url)}`;
-  };
-
-  const whatsappShareUrl = (text, url) => {
-    return `https://api.whatsapp.com/send?text=${encodeURIComponent(
-      text
-    )} ${encodeURIComponent(url)}`;
-  };
   const handleShareOnTwitter = () => {
     const text = `Check out this post by ${name}: ${description}`;
-    const url = `http://localhost:5000/api/posts/${postId}`; // Replace with actual post URL
+    const url = `http://localhost:5000/api/posts/${postId}`;
     window.open(twitterShareUrl(text, url), "_blank");
   };
 
   const handleShareOnWhatsApp = () => {
     const text = `Check out this post by ${name}: ${description}`;
-    const url = `http://localhost:5000/api/posts/${postId}`; // Replace with actual post URL
+    const url = `http://localhost:5000/api/posts/${postId}`;
     window.open(whatsappShareUrl(text, url), "_blank");
   };
+
   const handleOpenShareDialog = () => {
     setOpenShareDialog(true);
   };
@@ -82,15 +125,6 @@ const PostWidget = ({
   const handleCloseShareDialog = () => {
     setOpenShareDialog(false);
   };
-
-  const loggedInUserId = useSelector((state) => state.uid);
-  const isLiked = Boolean(likes[loggedInUserId]);
-  const likeCount = Object.keys(likes).length;
-
-  const { palette } = useTheme();
-  const main = colors.grey;
-  const [newComment, setNewComment] = useState("");
-  const [openCommentDialog, setOpenCommentDialog] = useState(false);
 
   const handleNewCommentChange = (e) => {
     setNewComment(e.target.value);
@@ -128,7 +162,6 @@ const PostWidget = ({
     setNewComment("");
     handleCommentDialogClose();
   };
-  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
   const handleDeletePost = async () => {
     try {
@@ -152,9 +185,6 @@ const PostWidget = ({
       console.error("Error deleting post:", error);
     }
   };
-
-  const [isEditing, setIsEditing] = useState(false);
-  const [editedDescription, setEditedDescription] = useState(description);
 
   const handleEditPost = () => {
     setIsEditing(true);
@@ -206,33 +236,50 @@ const PostWidget = ({
     dispatch(setPost({ post: updatedPost }));
   };
 
+  const twitterShareUrl = (text, url) => {
+    return `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+      text
+    )}&url=${encodeURIComponent(url)}`;
+  };
+
+  const whatsappShareUrl = (text, url) => {
+    return `https://api.whatsapp.com/send?text=${encodeURIComponent(
+      text
+    )} ${encodeURIComponent(url)}`;
+  };
+
   return (
     <WidgetWrapper m="2rem 0">
       <Friend friendId={postUserId} name={name} userPicturePath={"/b.png"} />
-      {postUserId === loggedInUserId && (
-        <div>
-          <IconButton
-            aria-label="more"
-            aria-controls="post-menu"
-            aria-haspopup="true"
-            onClick={handleClick}
-          >
-            <MoreVertIcon />
-          </IconButton>
-          <Menu
-            id="post-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={open}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={handleEditPost}>Edit</MenuItem>
+
+      <div>
+        <IconButton
+          aria-label="more"
+          aria-controls="post-menu"
+          aria-haspopup="true"
+          onClick={handleClick}
+        >
+          <MoreVertIcon />
+        </IconButton>
+        <Menu
+          id="post-menu"
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          {!isPostOwner && (
+            <MenuItem onClick={handleReportPost}>Report Post</MenuItem>
+          )}
+          {isPostOwner && <MenuItem onClick={handleEditPost}>Edit</MenuItem>}
+          {isPostOwner && (
             <MenuItem onClick={() => setOpenDeleteDialog(true)}>
               Delete
             </MenuItem>
-          </Menu>
-        </div>
-      )}
+          )}
+        </Menu>
+      </div>
+
       <Typography color={main} sx={{ mt: "1rem" }}>
         {description}
       </Typography>
@@ -304,6 +351,8 @@ const PostWidget = ({
           </Box>
         </Box>
       )}
+
+      {/* Share Dialog */}
       <Dialog open={openShareDialog} onClose={handleCloseShareDialog}>
         <DialogTitle>Share Post</DialogTitle>
         <DialogContent>
@@ -360,6 +409,7 @@ const PostWidget = ({
         </DialogActions>
       </Dialog>
 
+      {/* Comment Dialog */}
       <Dialog open={openCommentDialog} onClose={handleCommentDialogClose}>
         <DialogTitle>Confirm Comment</DialogTitle>
         <DialogContent>
@@ -399,55 +449,56 @@ const PostWidget = ({
           </Button>
         </DialogActions>
       </Dialog>
-      {isEditing && (
-        <Dialog open={isEditing} onClose={handleEditClose}>
-          <DialogTitle>Edit Post</DialogTitle>
-          <DialogContent>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="description"
-              label="Post Description"
-              type="text"
-              fullWidth
-              variant="outlined"
-              value={editedDescription}
-              onChange={(e) => setEditedDescription(e.target.value)}
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button
-              onClick={handleEditClose}
-              sx={{
-                color: palette.background.alt,
-                backgroundColor: "#3bb19b",
-                borderRadius: "3rem",
-                "&:hover": {
-                  cursor: "pointer",
-                  color: "black",
-                },
-              }}
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={handleUpdatePost}
-              sx={{
-                color: palette.background.alt,
-                backgroundColor: "#3bb19b",
-                borderRadius: "3rem",
-                "&:hover": {
-                  cursor: "pointer",
-                  color: "black",
-                },
-              }}
-            >
-              Update
-            </Button>
-          </DialogActions>
-        </Dialog>
-      )}
-      {/* Delete Confirmation Dialog */}
+
+      {/* Edit Post Dialog */}
+      <Dialog open={isEditing} onClose={handleEditClose}>
+        <DialogTitle>Edit Post</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="description"
+            label="Post Description"
+            type="text"
+            fullWidth
+            variant="outlined"
+            value={editedDescription}
+            onChange={(e) => setEditedDescription(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={handleEditClose}
+            sx={{
+              color: palette.background.alt,
+              backgroundColor: "#3bb19b",
+              borderRadius: "3rem",
+              "&:hover": {
+                cursor: "pointer",
+                color: "black",
+              },
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={handleUpdatePost}
+            sx={{
+              color: palette.background.alt,
+              backgroundColor: "#3bb19b",
+              borderRadius: "3rem",
+              "&:hover": {
+                cursor: "pointer",
+                color: "black",
+              },
+            }}
+          >
+            Update
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Delete Post Dialog */}
       <Dialog
         open={openDeleteDialog}
         onClose={() => setOpenDeleteDialog(false)}
@@ -460,6 +511,7 @@ const PostWidget = ({
         </DialogContent>
         <DialogActions>
           <Button
+            onClick={() => setOpenDeleteDialog(false)}
             sx={{
               color: palette.background.alt,
               backgroundColor: "#3bb19b",
@@ -469,7 +521,6 @@ const PostWidget = ({
                 color: "black",
               },
             }}
-            onClick={() => setOpenDeleteDialog(false)}
           >
             Cancel
           </Button>
@@ -486,6 +537,57 @@ const PostWidget = ({
             }}
           >
             Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Report Post Dialog */}
+      <Dialog open={openReportDialog} onClose={handleCloseReportDialog}>
+        <DialogTitle>Report Post</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Please provide a reason for reporting this post.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="report-reason"
+            label="Reason"
+            type="text"
+            fullWidth
+            variant="outlined"
+            value={reportReason}
+            onChange={handleReportReasonChange}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={handleCloseReportDialog}
+            sx={{
+              color: palette.background.alt,
+              backgroundColor: "#3bb19b",
+              borderRadius: "3rem",
+              "&:hover": {
+                cursor: "pointer",
+                color: "black",
+              },
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={handleSubmitReport}
+            sx={{
+              color: palette.background.alt,
+              backgroundColor: "#3bb19b",
+              borderRadius: "3rem",
+              "&:hover": {
+                cursor: "pointer",
+                color: "black",
+              },
+            }}
+          >
+            Submit
           </Button>
         </DialogActions>
       </Dialog>

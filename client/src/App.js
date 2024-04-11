@@ -50,6 +50,7 @@ import EditModelVideos from "./components/AdminPanel/EditModelVideos";
 import EditSqftCost from "./components/AdminPanel/EditSqftCost";
 import FloodConnect from "./components/FloodConnect/homePage";
 import ProfilePage from "./components/FloodConnect/profilePage";
+import PostModeration from "./components/AdminPanel/PostModeration";
 
 function App() {
   // const userToken = localStorage.getItem("token");
@@ -247,6 +248,9 @@ function App() {
         )}
         {userToken && (
           <Route path="/edit-sqft-cost" element={<EditSqftCost />} />
+        )}
+        {userToken && (
+          <Route path="/post-report" element={<PostModeration />} />
         )}
         {userToken && (
           <Route path="/user-feedbacks" element={<UserFeedback />} />

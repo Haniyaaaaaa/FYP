@@ -1,13 +1,10 @@
-import { PersonAddOutlined, PersonRemoveOutlined } from "@mui/icons-material";
-import { Box, IconButton, Typography, colors, useTheme } from "@mui/material";
+import { Box, Typography, colors, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setFriends } from "../state";
 import FlexBetween from "../components/FlexBetween";
 import UserImage from "../components/UserImage";
 
 const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { _id } = useSelector((state) => state.uid);
   const friends = useSelector((state) => state.friends);
@@ -17,22 +14,6 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   const primaryDark = palette.primary.dark;
   const main = colors.grey;
   const medium = colors.blueGrey;
-
-  const isFriend = friends.find((friend) => friend._id === friendId);
-
-  const patchFriend = async () => {
-    const response = await fetch(
-      `http://localhost:3000/users/${_id}/${friendId}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    const data = await response.json();
-    dispatch(setFriends({ friends: data }));
-  };
 
   return (
     <FlexBetween>

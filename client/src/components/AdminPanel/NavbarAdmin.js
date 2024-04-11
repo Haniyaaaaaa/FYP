@@ -127,6 +127,19 @@ export default function Navbar() {
         </Link>
 
         <Divider />
+        {/* post report Section */}
+        <Link
+          to="/post-report"
+          style={{ textDecoration: "none", color: "inherit" }}
+          onClick={handleNavbarSectionClose}
+        >
+          <ListItemButton>
+            <ErrorOutlineIcon style={{ opacity: "0.6", marginRight: "8px" }} />
+            <ListItemText primary="Post Moderation" />
+          </ListItemButton>
+        </Link>
+
+        <Divider />
 
         {/* User feedback Section */}
         <Link

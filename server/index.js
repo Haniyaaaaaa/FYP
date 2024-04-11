@@ -22,6 +22,7 @@ const postRoutes = require("./routes/posts.js");
 const locationRoutes = require("./routes/locations.js");
 const modelCostRoutes = require("./routes/modelcosts.js");
 const floodModelRoutes = require("./routes/floodmodels.js");
+const postModModelRoutes = require("./routes/postmoderation.js");
 // database connection
 connection();
 
@@ -40,6 +41,7 @@ app.use("/api/notes", notesRoutes);
 app.use("/api/quiz", quizRoutes);
 app.use("/api/feedback", feedbackRoutes);
 app.use("/api/complaint", complaintRoutes);
+app.use("/api/postmoderation", postModModelRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 // app.use("/api/checklist", checklistRoutes);
 // app.use("/api/checklist", prefloodchecklistRoutes);
