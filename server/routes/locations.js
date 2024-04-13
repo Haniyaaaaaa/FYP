@@ -99,4 +99,77 @@ router.post("/add-district-location-cost", async (req, res) => {
   }
 });
 
+router.delete("/delete-sqft-cost", async (req, res) => {
+  try {
+    const { districtName, locationName, locationId } = req.body;
+
+    const deletedCostEntry = await CostModel.findByIdAndDelete(locationId);
+
+    if (!deletedCostEntry) {
+      return res.status(404).json({ error: "Cost entry not found" });
+    }
+
+    const district = await Location.findOne({ district: districtName });
+
+    if (!district) {
+      return res.status(404).json({ error: "District not found" });
+    }
+
+    const locationIndex = district.locations.findIndex(
+      (loc) => loc === locationName
+    );
+
+    if (locationIndex === -1) {
+      return res.status(404).json({ error: "Location not found" });
+    }
+
+    district.locations.splice(locationIndex, 1);
+
+    await district.save();
+
+    res.json({ message: "Location deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting location:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+router.patch("/update-location-cost/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { selectedLocation, location, cost, districtName } = req.body;
+
+    const updatedLocationCost = await CostModel.findByIdAndUpdate(
+      id,
+      { location, cost },
+      { new: true }
+    );
+
+    if (!updatedLocationCost) {
+      return res.status(404).json({ error: "Location cost entry not found" });
+    }
+
+    const district = await Location.findOne({ district: districtName });
+    const locationIndex = district.locations.findIndex(
+      (loc) => loc === selectedLocation.location
+    );
+
+    if (locationIndex === -1) {
+      return res.status(404).json({ error: "Location not found" });
+    }
+
+    district.locations[locationIndex] = location;
+
+    await district.save();
+
+    res.json({
+      message: "Location cost updated successfully",
+      location: updatedLocationCost,
+    });
+  } catch (error) {
+    console.error("Error updating location cost:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 module.exports = router;

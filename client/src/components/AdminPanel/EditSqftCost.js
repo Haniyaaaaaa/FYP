@@ -24,6 +24,9 @@ export default function EditSqftCost() {
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [selectedDistrict, setSelectedDistrict] = useState(null);
   const [newDistrict, setNewDistrict] = useState(null);
+  const [selectedRecordDistrict, setSelectedRecordDistrict] = useState(null);
+
+  // Function to handle editing a location record
 
   useEffect(() => {
     fetchData();
@@ -54,6 +57,7 @@ export default function EditSqftCost() {
   const handleEditLocation = (record) => {
     setVisible(true);
     setSelectedLocation(record);
+    setSelectedRecordDistrict(record.district);
   };
 
   const handleCancel = () => {
@@ -77,27 +81,26 @@ export default function EditSqftCost() {
           });
           districtName = newDistrict;
         } else {
-          // If user selected an existing district
-          districtName = selectedDistrict;
-          // Add new location to the selected district
-
+          districtName = selectedDistrict || selectedRecordDistrict;
+        }
+        if (selectedLocation) {
+          // If editing existing location
+          await axios.patch(
+            `http://localhost:5000/api/locations/update-location-cost/${selectedLocation._id}`,
+            { districtName, location, selectedLocation, cost }
+          );
+          message.success("Location updated successfully");
+        } else {
+          // If adding new location
           await axios.post(
             `http://localhost:5000/api/locations/add-location/${districtName}/${location}`
           );
+          await axios.post(
+            `http://localhost:5000/api/locations/add-district-location-cost`,
+            { districtName, location, cost }
+          );
+          message.success("Location added successfully");
         }
-
-        // Add district location with cost
-        console.log(cost);
-        await axios.post(
-          `http://localhost:5000/api/locations/add-district-location-cost`,
-          {
-            districtName,
-            location,
-            cost,
-          }
-        );
-
-        message.success("Location added successfully");
         setVisible(false);
         form.resetFields();
         fetchData();
@@ -108,10 +111,21 @@ export default function EditSqftCost() {
     });
   };
 
-  const handleDeleteLocation = async (locationId) => {
+  const handleDeleteLocation = async (locationId, district, location) => {
+    const requestBody = {
+      locationId,
+      districtName: district,
+      locationName: location,
+    };
     try {
       await axios.delete(
-        `http://localhost:5000/api/sqft/locations/${locationId}`
+        `http://localhost:5000/api/locations/delete-sqft-cost`,
+        {
+          data: requestBody,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
       message.success("Location deleted successfully");
       fetchData();
@@ -165,7 +179,9 @@ export default function EditSqftCost() {
       render: (text, record) => (
         <Popconfirm
           title="Are you sure you want to delete this location?"
-          onConfirm={() => handleDeleteLocation(record._id)}
+          onConfirm={() =>
+            handleDeleteLocation(record._id, record.district, record.location)
+          }
           okText="Yes"
           cancelText="No"
         >

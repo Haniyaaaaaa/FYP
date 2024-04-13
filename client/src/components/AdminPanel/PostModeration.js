@@ -103,6 +103,13 @@ export default function PostModeration() {
           await axios.delete(
             `http://localhost:5000/api/posts/${selectedComplaint.postId}/delete`
           );
+
+          // Update the complaint to mark it as responded
+          await axios.put(
+            `http://localhost:5000/api/postmoderation/respond/${complaintId}`,
+            { responded: true }
+          );
+
           // Remove the complaint from the list of complaints
           setComplaint((prevComplaints) =>
             prevComplaints.filter((complaint) => complaint._id !== complaintId)
