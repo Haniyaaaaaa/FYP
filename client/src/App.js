@@ -138,7 +138,7 @@ function App() {
         {userToken && userRole === "power admin" && (
           <Route path="/" exact element={<HomeAdmin />} />
         )}
-        <Route path="/" exact element={<HomeAdmin />} />
+
         {userToken && userRole === "normal victim" && (
           <Route path="/" exact element={<HomeNormalvictim />} />
         )}

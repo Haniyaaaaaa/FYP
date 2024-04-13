@@ -8,7 +8,7 @@ import NavbarNormalVictim from "../../NavbarNormalvictim";
 const HomePage = () => {
   const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
 
-  const _id = useSelector((state) => state.token);
+  const _id = useSelector((state) => state.uid);
 
   return (
     <>
@@ -22,7 +22,7 @@ const HomePage = () => {
           justifyContent="space-between"
         >
           <Box flexBasis={isNonMobileScreens ? "26%" : undefined}>
-            <UserWidget userId={_id} picturePath={"/a.png"} />
+            <UserWidget userId={_id} />
           </Box>
           <Box
             flexBasis={isNonMobileScreens ? "42%" : undefined}

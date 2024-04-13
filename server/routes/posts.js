@@ -53,7 +53,7 @@ router.get("/", async (req, res) => {
 router.get("/:userId/posts", async (req, res) => {
   try {
     const { userId } = req.params;
-    const posts = await Post.find({ userId }.sort({ _id: -1 }));
+    const posts = await Post.find({ userId });
     res.status(200).json(posts);
   } catch (err) {
     res.status(404).json({ message: err.message });
