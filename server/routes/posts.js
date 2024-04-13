@@ -1,15 +1,34 @@
 const router = require("express").Router();
 const Post = require("../models/PostModel");
-const { UserModel, validate } = require("../models/UserModel");
+const multer = require("multer");
+const { UserModel } = require("../models/UserModel");
 
-router.post("/save-post", async (req, res) => {
+/* FILE STORAGE */
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(
+      null,
+      "C:/Users/PMLS/Desktop/Portfolio/Flood-Resilient/FYP/client/public/assets"
+    );
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage });
+
+router.post("/save-post", upload.single("picture"), async (req, res) => {
   try {
-    const { userId, description } = req.body;
+    const { userId, description, picture, picturePath } = req.body;
+    console.log(req);
     const user = await UserModel.findOne({ _id: userId });
+
     const newPost = new Post({
       userId,
       username: user.firstName,
       userPicturePath: "/a.png",
+      picturePath,
       likes: {},
       comments: [],
       description: description,
@@ -24,7 +43,7 @@ router.post("/save-post", async (req, res) => {
 });
 router.get("/", async (req, res) => {
   try {
-    const post = await Post.find();
+    const post = await Post.find().sort({ _id: -1 });
     res.status(200).json(post);
   } catch (err) {
     res.status(404).json({ message: err.message });
@@ -34,7 +53,7 @@ router.get("/", async (req, res) => {
 router.get("/:userId/posts", async (req, res) => {
   try {
     const { userId } = req.params;
-    const posts = await Post.find({ userId });
+    const posts = await Post.find({ userId }.sort({ _id: -1 }));
     res.status(200).json(posts);
   } catch (err) {
     res.status(404).json({ message: err.message });

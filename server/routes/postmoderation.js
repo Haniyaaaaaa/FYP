@@ -3,6 +3,7 @@ const PostModModel = require("../models/PostModModel.js");
 const PostModel = require("../models/PostModel.js");
 const { UserModel } = require("../models/UserModel.js");
 
+// Route to save a new complaint
 router.post("/save", async (req, res) => {
   try {
     const { complaint, userId, postId } = req.body;
@@ -15,12 +16,11 @@ router.post("/save", async (req, res) => {
     const newcomplaint = new PostModModel({
       userId,
       postId,
-
       complaint,
     });
 
     await newcomplaint.save();
-    res.status(201).json({ message: "complaint saved successfully" });
+    res.status(201).json({ message: "Complaint saved successfully" });
   } catch (error) {
     console.error("Error saving complaint:", error);
     res.status(500).json({
@@ -29,7 +29,7 @@ router.post("/save", async (req, res) => {
   }
 });
 
-//on admin panel
+// Route to fetch unresponded complaints
 router.get("/fetch-modposts", async (req, res) => {
   try {
     const complaints = await PostModModel.find({ responded: false })
@@ -75,6 +75,29 @@ router.get("/fetch-modposts", async (req, res) => {
     res.status(500).json({
       message: "Internal Server Error",
     });
+  }
+});
+
+// Route to update the responded field of a complaint
+router.put("/respond/:id", async (req, res) => {
+  const { id } = req.params;
+  const { responded } = req.body;
+
+  try {
+    const updatedComplaint = await PostModModel.findByIdAndUpdate(
+      id,
+      { responded },
+      { new: true }
+    );
+
+    if (updatedComplaint) {
+      res.json(updatedComplaint);
+    } else {
+      res.status(404).json({ message: "Complaint not found" });
+    }
+  } catch (error) {
+    console.error("Error updating complaint response:", error);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 

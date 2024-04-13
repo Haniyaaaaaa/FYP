@@ -29,7 +29,7 @@ const HomePage = () => {
             mt={isNonMobileScreens ? undefined : "2rem"}
             className="mr-40"
           >
-            <MyPostWidget picturePath={"/a.png"} />
+            <MyPostWidget />
             <PostsWidget userId={_id} />
           </Box>
         </Box>

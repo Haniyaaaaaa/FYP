@@ -2,12 +2,10 @@ import { Box, Typography, colors, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import FlexBetween from "../components/FlexBetween";
-import UserImage from "../components/UserImage";
 
 const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   const navigate = useNavigate();
   const { _id } = useSelector((state) => state.uid);
-  const friends = useSelector((state) => state.friends);
 
   const { palette } = useTheme();
   const primaryLight = palette.primary.light;
@@ -18,7 +16,6 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   return (
     <FlexBetween>
       <FlexBetween gap="1rem">
-        <UserImage image={userPicturePath} size="55px" />
         <Box
           onClick={() => {
             navigate(`/profile/${friendId}`);

@@ -38,8 +38,8 @@ export default function UserComplaints() {
     {
       key: 1,
       title: "User Name", // Merged column title
-      dataIndex: "username", // Use "username" as the key for the merged value
-      render: (record) => `${record.firstName} ${record.lastName}`,
+      dataIndex: "firstName", // Use "username" as the key for the merged value
+
       width: "20%",
     },
 

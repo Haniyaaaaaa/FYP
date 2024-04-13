@@ -11,20 +11,19 @@ const PostsWidget = ({ userId, isProfile = false }) => {
   const getPosts = async () => {
     const response = await fetch("http://localhost:5000/api/posts");
     const data = await response.json();
-    console.log(data)
-    setPost(data)
+    console.log(data);
+    setPost(data);
     dispatch(setPosts({ posts: data }));
   };
 
   const getUserPosts = async () => {
     const response = await fetch(
-      `http://localhost:5000/api/posts/${userId}/posts`,
-     
+      `http://localhost:5000/api/posts/${userId}/posts`
     );
     const data = await response.json();
     console.log("post data");
     console.log(data);
-    setPost(data)
+    setPost(data);
     dispatch(setPosts({ posts: data }));
   };
 
@@ -43,7 +42,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
           _id,
           userId,
           username,
-          userPicturePath,
+          picturePath,
           description,
           likes,
           comments,
@@ -53,7 +52,7 @@ const PostsWidget = ({ userId, isProfile = false }) => {
             postId={_id}
             postUserId={userId}
             name={username}
-            userPicturePath={userPicturePath}
+            picturePath={picturePath}
             description={description}
             likes={likes}
             comments={comments}

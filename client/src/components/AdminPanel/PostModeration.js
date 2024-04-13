@@ -9,7 +9,6 @@ import PostWidget from "./widgets/PostWidget";
 export default function PostModeration() {
   const [complaint, setComplaint] = useState([]);
   const [visible, setVisible] = useState(false);
-  const [adminResponse, setAdminResponse] = useState("");
   const [complaintId, setComplaintId] = useState("");
   const [selectedComplaint, setSelectedComplaint] = useState(null);
 
@@ -26,7 +25,7 @@ export default function PostModeration() {
     };
 
     fetchUserComplaint();
-  }, [adminResponse]);
+  }, [complaint]);
 
   const columns = [
     {
@@ -82,8 +81,40 @@ export default function PostModeration() {
   };
 
   const handleOk = async (res) => {
-    console.log(res);
-    setAdminResponse(res);
+    try {
+      if (res === "Pass") {
+        // Update the complaint to mark it as responded
+        await axios.put(
+          `http://localhost:5000/api/postmoderation/respond/${complaintId}`,
+          { responded: true }
+        );
+
+        // Remove the complaint from the list of complaints
+        setComplaint((prevComplaints) =>
+          prevComplaints.filter((complaint) => complaint._id !== complaintId)
+        );
+      } else if (res === "Moderate") {
+        // Show a confirmation dialog
+        const confirmed = window.confirm(
+          "Are you sure you want to delete this post?"
+        );
+        if (confirmed) {
+          // Delete the post
+          await axios.delete(
+            `http://localhost:5000/api/posts/${selectedComplaint.postId}/delete`
+          );
+          // Remove the complaint from the list of complaints
+          setComplaint((prevComplaints) =>
+            prevComplaints.filter((complaint) => complaint._id !== complaintId)
+          );
+        }
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      message.error("Failed to update post");
+    } finally {
+      setVisible(false); // Close the modal regardless of the outcome
+    }
   };
 
   return (

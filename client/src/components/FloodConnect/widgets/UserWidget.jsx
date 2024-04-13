@@ -44,7 +44,6 @@ const UserWidget = ({ userId, picturePath }) => {
         onClick={() => navigate(`/profile/${userId}`)}
       >
         <FlexBetween gap="1rem">
-          <UserImage image={picturePath} />
           <Box>
             <Typography
               variant="h4"
@@ -62,21 +61,6 @@ const UserWidget = ({ userId, picturePath }) => {
           </Box>
         </FlexBetween>
       </FlexBetween>
-
-      <Divider />
-
-      {/* SECOND ROW */}
-
-      <Divider />
-
-      <Divider />
-
-      {/* FOURTH ROW */}
-      <Box p="1rem 0">
-        <Typography fontSize="1rem" color={main} fontWeight="500" mb="1rem">
-          Notifications
-        </Typography>
-      </Box>
     </WidgetWrapper>
   );
 };

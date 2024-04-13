@@ -37,7 +37,7 @@ const PostWidget = ({
   likes,
   comments,
   description,
-  isComplaint,
+  picturePath,
 }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openReportDialog, setOpenReportDialog] = useState(false);
@@ -95,6 +95,7 @@ const PostWidget = ({
   };
 
   const handleReportPost = () => {
+    setReportReason("");
     handleOpenReportDialog();
   };
 
@@ -250,40 +251,49 @@ const PostWidget = ({
 
   return (
     <WidgetWrapper m="2rem 0">
-      <Friend friendId={postUserId} name={name} userPicturePath={"/b.png"} />
-
-      <div>
-        <IconButton
-          aria-label="more"
-          aria-controls="post-menu"
-          aria-haspopup="true"
-          onClick={handleClick}
-        >
-          <MoreVertIcon />
-        </IconButton>
-        <Menu
-          id="post-menu"
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-        >
-          {!isPostOwner && (
-            <MenuItem onClick={handleReportPost}>Report Post</MenuItem>
-          )}
-          {isPostOwner && <MenuItem onClick={handleEditPost}>Edit</MenuItem>}
-          {isPostOwner && (
-            <MenuItem onClick={() => setOpenDeleteDialog(true)}>
-              Delete
-            </MenuItem>
-          )}
-        </Menu>
-      </div>
+      <FlexBetween gap="1rem">
+        <Friend friendId={postUserId} name={name} userPicturePath={"/b.png"} />
+        <div>
+          <IconButton
+            aria-label="more"
+            aria-controls="post-menu"
+            aria-haspopup="true"
+            onClick={handleClick}
+          >
+            <MoreVertIcon />
+          </IconButton>
+          <Menu
+            id="post-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            {!isPostOwner && (
+              <MenuItem onClick={handleReportPost}>Report Post</MenuItem>
+            )}
+            {isPostOwner && <MenuItem onClick={handleEditPost}>Edit</MenuItem>}
+            {isPostOwner && (
+              <MenuItem onClick={() => setOpenDeleteDialog(true)}>
+                Delete
+              </MenuItem>
+            )}
+          </Menu>
+        </div>
+      </FlexBetween>
 
       <Typography color={main} sx={{ mt: "1rem" }}>
         {description}
       </Typography>
-
+      {picturePath && (
+        <img
+          width="100%"
+          height="auto"
+          alt="post"
+          style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
+          src={`http://localhost:5000/assets/${picturePath}`}
+        />
+      )}
       <FlexBetween mt="0.25rem">
         <FlexBetween gap="1rem">
           <FlexBetween gap="0.3rem">

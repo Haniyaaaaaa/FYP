@@ -30,7 +30,7 @@ import { setPosts } from "../state";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import axios from "axios";
 
-const MyPostWidget = ({ picturePath }) => {
+const MyPostWidget = () => {
   const dispatch = useDispatch();
   const [openDialog, setOpenDialog] = useState(false);
   const [isImage, setIsImage] = useState(false);
@@ -56,30 +56,36 @@ const MyPostWidget = ({ picturePath }) => {
   };
 
   const handlePost = async () => {
-    const postData = {
-      userId: uid,
-      description: post,
-    };
+    const formData = new FormData();
+    formData.append("userId", uid);
+    formData.append("description", post);
+    if (image) {
+      formData.append("picture", image);
+      formData.append("picturePath", image.name);
+    }
 
     setOpenDialog(false);
 
     try {
-      const response = await axios.post(
+      const response = await fetch(
         `http://localhost:5000/api/posts/save-post`,
-        postData,
         {
-          headers: {
-            "Content-Type": "application/json",
-          },
+          method: "POST",
+          body: formData,
         }
       );
 
-      const posts = response.data;
+      if (!response.ok) {
+        const errorMessage = `Error: ${response.status} - ${response.statusText}`;
+        throw new Error(errorMessage);
+      }
+
+      const posts = await response.json();
       dispatch(setPosts({ posts }));
       setImage(null);
       setPost("");
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error:", error.message);
     }
   };
 
@@ -130,11 +136,6 @@ const MyPostWidget = ({ picturePath }) => {
         </DialogActions>
       </Dialog>
       <FlexBetween gap="1.5rem">
-        {picturePath ? (
-          <UserImage image={picturePath} />
-        ) : (
-          <AccountCircleIcon />
-        )}
         <InputBase
           placeholder="What's on your mind..."
           onChange={(e) => setPost(e.target.value)}
